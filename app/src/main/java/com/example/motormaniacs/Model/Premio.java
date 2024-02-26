@@ -4,11 +4,15 @@ public class Premio {
 	private int id;
 	private String nombre;
 	private Piloto piloto = new Piloto();
+	private Equipo equipo = new Equipo();
+	private String temporada;
 	
-	public Premio (int id, String nombre, Piloto piloto) {
+	public Premio (int id, String nombre, Piloto piloto, Equipo equipo, String temporada) {
 		this.id = id;
 		this.nombre = nombre;
 		this.piloto = piloto;
+		this.equipo = equipo;
+		this.temporada = temporada;
 	}
 	public Premio (String nombre, Piloto piloto) {
 		this.id = 0;

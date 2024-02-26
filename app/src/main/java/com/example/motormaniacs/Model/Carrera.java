@@ -4,17 +4,20 @@ import java.util.ArrayList;
 
 public class Carrera {
 	private int id;
-	private String nombre;
-	private ArrayList<Piloto>  Posicion_pilotos =new ArrayList<Piloto>();
-	
-	
-	
-	public Carrera(int id, String nombre) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
+	private String circuito;
+	private String fecha;
+	private ArrayList<Resultado>  Posicion_pilotos =new ArrayList<Resultado>();
+
+	public Carrera() {
 	}
-	
+
+	public Carrera(int id, String circuito, String fecha, ArrayList<Resultado> posicion_pilotos) {
+		this.id = id;
+		this.circuito = circuito;
+		this.fecha = fecha;
+		Posicion_pilotos = posicion_pilotos;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -22,15 +25,15 @@ public class Carrera {
 		this.id = id;
 	}
 	public String getNombre() {
-		return nombre;
+		return circuito;
 	}
 	public void setNombre(String nombre) {
-		this.nombre = nombre;
+		this.circuito = nombre;
 	}
-	public ArrayList<Piloto> getPosicion_pilotos() {
+	public ArrayList<Resultado> getPosicion_pilotos() {
 		return Posicion_pilotos;
 	}
-	public void setPosicion_pilotos(ArrayList<Piloto> posicion_pilotos) {
+	public void setPosicion_pilotos(ArrayList<Resultado> posicion_pilotos) {
 		Posicion_pilotos = posicion_pilotos;
 	}
 	
