@@ -2,7 +2,7 @@ package com.example.motormaniacs.Model;
 
 public class Resultado {
 
-    private int id_Premio;
+    private int id_resultado;
     private Piloto piloto;
     private Equipo equipo;
     private Carrera carrera;
@@ -12,8 +12,8 @@ public class Resultado {
     public Resultado() {
     }
 
-    public Resultado(int id_Premio, Piloto piloto, Equipo equipo, Carrera carrera, int puntos, int posicion) {
-        this.id_Premio = id_Premio;
+    public Resultado(int id_resultado, Piloto piloto, Equipo equipo, Carrera carrera, int puntos, int posicion) {
+        this.id_resultado = id_resultado;
         this.piloto = piloto;
         this.equipo = equipo;
         this.carrera = carrera;
@@ -21,12 +21,12 @@ public class Resultado {
         this.posicion = posicion;
     }
 
-    public int getId_Premio() {
-        return id_Premio;
+    public int getId_resultado() {
+        return id_resultado;
     }
 
-    public void setId_Premio(int id_Premio) {
-        this.id_Premio = id_Premio;
+    public void setId_resultado(int id_resultado) {
+        this.id_resultado = id_resultado;
     }
 
     public Piloto getPiloto() {

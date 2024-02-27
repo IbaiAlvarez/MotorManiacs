@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Equipo {
 	private int id;
 	private String nombre;
+	private String estado;
 	private ArrayList<Piloto> pilotos = new ArrayList<Piloto>();
 	
 	public Equipo () {
@@ -12,9 +13,10 @@ public class Equipo {
 		this.nombre= "";
 		this.pilotos = new ArrayList<Piloto>();
 	}
-	public Equipo (int id, String nombre, ArrayList<Piloto> pilotos) {
+	public Equipo (int id, String nombre,String estado, ArrayList<Piloto> pilotos) {
 		this.id= id;
 		this.nombre= nombre;
+		this.estado = estado;
 		this.pilotos = pilotos;
 	}
 	public Equipo (int id, String nombre, ArrayList<Piloto> pilotos, int piloto1, int piloto2, int piloto3, int piloto4) {
@@ -47,7 +49,15 @@ public class Equipo {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
 	@Override
 	public String toString() {
 		return nombre + " #" + pilotos.get(0).getNumero() + " #" + pilotos.get(1).getNumero() + " #" + pilotos.get(2).getNumero() +" #" + pilotos.get(3).getNumero();

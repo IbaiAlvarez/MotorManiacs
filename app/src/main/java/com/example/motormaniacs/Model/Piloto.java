@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Piloto {
 	private int id;
+	private int id_equipo;
 	private String nombre;
 	private String apellido;
 	private int numero;
@@ -11,22 +12,19 @@ public class Piloto {
 	private int top5;
 	private int top10;
 	private int campeonatos;
-	private int promedio;
+	private int valoracion;
 	private int temporadas;
-	private boolean estado;
+	private String estado;
 	//private int puntos;
 	private ArrayList<Resultado> ResultadosPiloto =new ArrayList<Resultado>();
 
+
 	public Piloto() {
 	}
-	public Piloto(String nombre, String apellido, int numero) {
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.numero = numero;
-	}
 
-	public Piloto(int id, String nombre, String apellido, int numero, int top1, int top5, int top10, int campeonatos, int promedio, int temporadas, boolean estado, ArrayList<Resultado> resultadosPiloto) {
+	public Piloto(int id, int id_equipo, String nombre, String apellido, int numero, int top1, int top5, int top10, int campeonatos, int valoracion, int temporadas, String estado, ArrayList<Resultado> resultadosPiloto) {
 		this.id = id;
+		this.id_equipo = id_equipo;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.numero = numero;
@@ -34,7 +32,7 @@ public class Piloto {
 		this.top5 = top5;
 		this.top10 = top10;
 		this.campeonatos = campeonatos;
-		this.promedio = promedio;
+		this.valoracion = valoracion;
 		this.temporadas = temporadas;
 		this.estado = estado;
 		ResultadosPiloto = resultadosPiloto;
@@ -94,11 +92,11 @@ public class Piloto {
 	public void setCampeonatos(int campeonatos) {
 		this.campeonatos = campeonatos;
 	}
-	public int getPromedio() {
-		return promedio;
+	public int getValoracion() {
+		return valoracion;
 	}
-	public void setPromedio(int promedio) {
-		this.promedio = promedio;
+	public void setValoracion(int valoracion) {
+		this.valoracion = valoracion;
 	}
 
 	public int getTop1() {
@@ -109,11 +107,11 @@ public class Piloto {
 		this.top1 = top1;
 	}
 
-	public boolean isEstado() {
+	public String getEstado() {
 		return estado;
 	}
 
-	public void setEstado(boolean estado) {
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 
@@ -123,6 +121,14 @@ public class Piloto {
 
 	public void setResultadosPiloto(ArrayList<Resultado> resultadosPiloto) {
 		ResultadosPiloto = resultadosPiloto;
+	}
+
+	public int getId_equipo() {
+		return id_equipo;
+	}
+
+	public void setId_equipo(int id_equipo) {
+		this.id_equipo = id_equipo;
 	}
 
 	@Override

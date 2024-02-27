@@ -1,8 +1,15 @@
 package com.example.motormaniacs;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
+
+import com.example.motormaniacs.Controller.SQLMethods;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -10,5 +17,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        StrictMode.enableDefaults();
+
+        SQLMethods sqlQuery = new SQLMethods();
+        sqlQuery.cargarEquipo("Hendrick Motorsports");
     }
 }
