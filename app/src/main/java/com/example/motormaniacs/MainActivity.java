@@ -9,6 +9,9 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import com.example.motormaniacs.Controller.SQLMethods;
+import com.example.motormaniacs.Model.Resultado;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.enableDefaults();
 
         SQLMethods sqlQuery = new SQLMethods();
-        sqlQuery.cargarEquipo("Hendrick Motorsports");
+        sqlQuery.cargarEquipoNombre("Hendrick Motorsports");
+        ArrayList<String> equipos =  sqlQuery.obtenerListaEquipos();
+        ArrayList<Resultado> resultados = sqlQuery.cargarResultadosUltimaCarrera();
     }
 }
