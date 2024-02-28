@@ -21,6 +21,10 @@ public class Piloto {
 
 	public Piloto() {
 	}
+	public Piloto(String nombre, String apellido) {
+		nombre = this.nombre;
+		apellido = this.apellido;
+	}
 
 	public Piloto(int id, int id_equipo, String nombre, String apellido, int numero, int top1, int top5, int top10, int campeonatos, int valoracion, int temporadas, String estado, ArrayList<Resultado> resultadosPiloto) {
 		this.id = id;

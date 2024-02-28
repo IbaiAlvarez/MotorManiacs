@@ -8,7 +8,7 @@ public class ConnectionClass {
 
     private final String userMySQL = "administrador";
     private final String passwordMySQL = "Elorrieta00";
-    private final String host = "10.5.13.25";
+    private final String host = "10.5.13.28";
     private final String port = "3306";
     private final String dbName = "motormaniacs";
     private final String urlGetDBParameters = "autoReconnect=true&useSSL=false";

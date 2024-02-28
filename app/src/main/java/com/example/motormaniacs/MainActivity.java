@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.enableDefaults();
 
         SQLMethods sqlQuery = new SQLMethods();
-        sqlQuery.cargarEquipoNombre("Hendrick Motorsports");
+        /*sqlQuery.cargarEquipoNombre("Hendrick Motorsports");
         ArrayList<String> equipos =  sqlQuery.obtenerListaEquipos();
-        ArrayList<Resultado> resultados = sqlQuery.cargarResultadosUltimaCarrera();
+        ArrayList<Resultado> resultados = sqlQuery.cargarResultadosUltimaCarrera();*/
     }
 }

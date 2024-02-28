@@ -3,15 +3,20 @@ package com.example.motormaniacs.Controller;
 
 import static android.content.ContentValues.TAG;
 
+import android.database.SQLException;
 import android.util.Log;
 
 import com.example.motormaniacs.Model.Equipo;
 import com.example.motormaniacs.Model.Piloto;
+import com.example.motormaniacs.Model.Premio;
 import com.example.motormaniacs.Model.Resultado;
+
 import com.mysql.jdbc.Statement;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import kotlin.contracts.Returns;
 
@@ -256,6 +261,97 @@ public class SQLMethods {
         }
         return e;
     }
+    //Metodos para añadir
+    public boolean añadirPiloto(String nombre, String apellido) {
+        boolean guardado = false;
+        try {
+            con_class.CrearConexionMySQL();
 
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+            String query =  "SELECT COUNT(*) FROM "+TABLA_PILOTOS+" where nombre='"+nombre+"' and apellido='"+apellido+"';";
+            ResultSet req = comand.executeQuery(query);
 
+            if(req.next()) {
+                if(req.getInt(1)==0){
+                    comand = (Statement) con_class.getConnection().createStatement();
+                    query =  "INSERT INTO "+TABLA_PILOTOS+" (Nombre, Apellido) VALUES ('"+nombre+"','"+apellido+"')";
+                    comand.executeUpdate(query);
+                    guardado = true;
+                }
+            }
+            con_class.getConnection().close();
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+        return guardado;
+    }
+    public boolean añadirEquipo(String nombre) {
+        boolean guardado = false;
+        try {
+            con_class.CrearConexionMySQL();
+
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+            String query =  "SELECT COUNT(*) FROM "+TABLA_EQUIPOS+" where nombre='"+nombre+"';";
+            ResultSet req = comand.executeQuery(query);
+
+            if(req.next()) {
+                if(req.getInt(1)==0){
+                    comand = (Statement) con_class.getConnection().createStatement();
+                    query =  "INSERT INTO "+TABLA_EQUIPOS+" (Nombre) VALUES ('"+nombre+"')";
+                    comand.executeUpdate(query);
+                    guardado = true;
+                }
+            }
+            con_class.getConnection().close();
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+        return guardado;
+    }
+    public boolean añadirCarrera(String nombre) {
+        boolean guardado = false;
+        try {
+            con_class.CrearConexionMySQL();
+
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+            String query =  "SELECT COUNT(*) FROM "+TABLA_CARRERAS+" where nombre='"+nombre+"';";
+            ResultSet req = comand.executeQuery(query);
+
+            if(req.next()) {
+                if(req.getInt(1)==0){
+                    comand = (Statement) con_class.getConnection().createStatement();
+                    query =  "INSERT INTO "+TABLA_CARRERAS+" (Nombre) VALUES ('"+nombre+"')";
+                    comand.executeUpdate(query);
+                    guardado = true;
+                }
+            }
+            con_class.getConnection().close();
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+        return guardado;
+    }
+    public boolean añadirResultado(int piloto, int carrera, int posicion) {
+        boolean guardado = false;
+        try {
+            con_class.CrearConexionMySQL();
+
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+            String query =  "SELECT COUNT(*) FROM "+TABLA_RESULTADOS+" where (Piloto_id, Carrera_id, Posicion) VALUES ('"+piloto+"','"+carrera+"','"+posicion+"')";
+            ResultSet req = comand.executeQuery(query);
+
+            if(req.next()) {
+                if(req.getInt(1)==0){
+                    comand = (Statement) con_class.getConnection().createStatement();
+                    query =  "INSERT INTO "+TABLA_CARRERAS+" (Piloto_id, Carrera_id, Posicion) VALUES ('"+piloto+"','"+carrera+"','"+posicion+"')";
+                    comand.executeUpdate(query);
+                    guardado = true;
+                }
+            }
+            con_class.getConnection().close();
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+        return guardado;
+    }
 }
