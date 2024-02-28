@@ -3,8 +3,8 @@ package com.example.motormaniacs.Controller;
 
 import static android.content.ContentValues.TAG;
 
-import android.os.AsyncTask;
 import android.database.SQLException;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.motormaniacs.Model.Carrera;
@@ -32,7 +32,9 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
     ReturnMethods returnMethods = new ReturnMethods();
 
 
-    //region SELECT
+    // ╔═════════════════════════════════════════════════════════ CARGA REGION ═════════════════════════════════════════════════════════╗
+
+
     public Equipo cargarEquipoNombre(String nombre_equipo){
         Equipo e = new Equipo();
 
@@ -132,53 +134,6 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
             System.out.println("Exception: "+ ex.getMessage());
         }
         return p;
-    }
-
-    public int[] consultarVictoriasPiloto(int piloto_id){
-        int[] victorias = new int[3];
-
-        try {
-            con_class.CrearConexionMySQL();
-
-            Statement comand = (Statement) con_class.getConnection().createStatement();
-
-            String query =  "SELECT COUNT(CASE WHEN Posicion = 1 THEN 1 END) AS 'TOP 1', COUNT(CASE WHEN Posicion <= 5 THEN 1 END) AS 'TOP 5', COUNT(CASE WHEN Posicion <= 10 THEN 1 END) AS 'TOP 10' FROM "+TABLA_RESULTADOS+" WHERE piloto_id="+piloto_id+";";
-            ResultSet req_vicotrias = comand.executeQuery(query);
-
-            if(req_vicotrias.next()){
-                victorias[0]=(req_vicotrias.getInt(1));
-                victorias[1]=(req_vicotrias.getInt(2));
-                victorias[2]=(req_vicotrias.getInt(3));
-            }
-
-            con_class.getConnection().close();
-        }catch(Exception ex) {
-            System.out.println("Exception: "+ ex.getMessage());
-        }
-        return victorias;
-    }
-
-    public int consultarCampeonatosPiloto(int piloto_id){
-        int victorias = 0;
-
-
-        try {
-            con_class.CrearConexionMySQL();
-
-            Statement comand = (Statement) con_class.getConnection().createStatement();
-
-            String query =  "SELECT COUNT(*) FROM "+TABLA_PREMIOS+" WHERE Piloto_id="+piloto_id+" and Nombre='Campeonato'; ";
-            ResultSet req_vicotrias = comand.executeQuery(query);
-
-            if(req_vicotrias.next()){
-                victorias=(req_vicotrias.getInt(1));
-            }
-
-            con_class.getConnection().close();
-        }catch(Exception ex) {
-            System.out.println("Exception: "+ ex.getMessage());
-        }
-        return victorias;
     }
 
     public ArrayList<String> obtenerListaEquipos(){
@@ -321,7 +276,11 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
         }
         return e;
     }
-    //Metodos para añadir
+
+
+    // ╔═════════════════════════════════════════════════════════ Insert REGION ═════════════════════════════════════════════════════════╗
+
+
     public boolean añadirPiloto(String nombre, String apellido) {
         boolean guardado = false;
         try {
@@ -345,6 +304,7 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
         }
         return guardado;
     }
+
     public boolean añadirEquipo(String nombre) {
         boolean guardado = false;
         try {
@@ -368,6 +328,7 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
         }
         return guardado;
     }
+
     public boolean añadirCarrera(String nombre) {
         boolean guardado = false;
         try {
@@ -391,6 +352,115 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
         }
         return guardado;
     }
+
+    public boolean añadirResultado(int piloto, int carrera, int posicion) {
+        boolean guardado = false;
+
+        try {
+            con_class.CrearConexionMySQL();
+
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+            String query =  "SELECT COUNT(*) FROM "+TABLA_RESULTADOS+" where (Piloto_id, Carrera_id, Posicion) VALUES ('"+piloto+"','"+carrera+"','"+posicion+"')";
+            ResultSet req = comand.executeQuery(query);
+            if(req.next()) {
+                if(req.getInt(1)==0){
+                    int puntos = Metodos.devolverPuntos(posicion);
+                    int equipo = devolverIdEquipo(piloto);
+                    comand = (Statement) con_class.getConnection().createStatement();
+                    query =  "INSERT INTO "+TABLA_CARRERAS+" (Piloto_id, Eqiopo_id, Carrera_id, Posicion, Puntos) VALUES ('"+piloto+"','"+equipo+"','"+carrera+"','"+posicion+"','"+puntos+"')";
+                    comand.executeUpdate(query);
+                    guardado = true;
+                }
+            }
+            con_class.getConnection().close();
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+        return guardado;
+    }
+
+
+    // ╔═════════════════════════════════════════════════════════ SELECT REGION ═════════════════════════════════════════════════════════╗
+
+
+    public int devolverIdEquipo(int piloto) {
+        int e = 0;
+        try {
+            con_class.CrearConexionMySQL();
+
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+            String query = "SELECT Equipo_id FROM " + TABLA_PILOTOS + " where Piloto_id='" + piloto + "';";
+            ResultSet req = comand.executeQuery(query);
+
+            if (req.next()) {
+                e = (req.getInt(1));
+            }
+
+            con_class.getConnection().close();
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+        return e;
+    }
+
+    public int[] consultarVictoriasPiloto(int piloto_id){
+        int[] victorias = new int[3];
+
+        try {
+            con_class.CrearConexionMySQL();
+
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+
+            String query =  "SELECT COUNT(CASE WHEN Posicion = 1 THEN 1 END) AS 'TOP 1', COUNT(CASE WHEN Posicion <= 5 THEN 1 END) AS 'TOP 5', COUNT(CASE WHEN Posicion <= 10 THEN 1 END) AS 'TOP 10' FROM "+TABLA_RESULTADOS+" WHERE piloto_id="+piloto_id+";";
+            ResultSet req_vicotrias = comand.executeQuery(query);
+
+            if(req_vicotrias.next()){
+                victorias[0]=(req_vicotrias.getInt(1));
+                victorias[1]=(req_vicotrias.getInt(2));
+                victorias[2]=(req_vicotrias.getInt(3));
+            }
+
+            con_class.getConnection().close();
+        }catch(Exception ex) {
+            System.out.println("Exception: "+ ex.getMessage());
+        }
+        return victorias;
+    }
+
+    public int consultarCampeonatosPiloto(int piloto_id){
+        int victorias = 0;
+
+
+        try {
+            con_class.CrearConexionMySQL();
+
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+
+            String query =  "SELECT COUNT(*) FROM "+TABLA_PREMIOS+" WHERE Piloto_id="+piloto_id+" and Nombre='Campeonato'; ";
+            ResultSet req_vicotrias = comand.executeQuery(query);
+
+            if(req_vicotrias.next()){
+                victorias=(req_vicotrias.getInt(1));
+            }
+
+            con_class.getConnection().close();
+        }catch(Exception ex) {
+            System.out.println("Exception: "+ ex.getMessage());
+        }
+        return victorias;
+    }
+
+
+
+
+    // ╔═════════════════════════════════════════════════════════ UPDATE REGION ═════════════════════════════════════════════════════════╗
+
+
+    // ╔═════════════════════════════════════════════════════════ DELETE REGION ═════════════════════════════════════════════════════════╗
+
+
+    // ╔═════════════════════════════════════════════════════════ OTROS REGION ═════════════════════════════════════════════════════════╗
+
 
     @Override
     protected Collection doInBackground(Void... voids) {
