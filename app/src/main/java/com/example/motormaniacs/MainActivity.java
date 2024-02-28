@@ -9,6 +9,7 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import com.example.motormaniacs.Controller.SQLMethods;
+import com.example.motormaniacs.Model.Equipo;
 import com.example.motormaniacs.Model.Resultado;
 
 import java.util.ArrayList;
@@ -22,10 +23,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         StrictMode.enableDefaults();
+        Equipo e= new Equipo();
 
         SQLMethods sqlQuery = new SQLMethods();
-        /*sqlQuery.cargarEquipoNombre("Hendrick Motorsports");
+        /*e = sqlQuery.cargarEquipoNombre("Hendrick Motorsports");
+        sqlQuery.añadirPiloto("pepe","perez");
         ArrayList<String> equipos =  sqlQuery.obtenerListaEquipos();
-        ArrayList<Resultado> resultados = sqlQuery.cargarResultadosUltimaCarrera();*/
+        ArrayList<Resultado> resultados = sqlQuery.cargarResultadosUltimaCarrera();
+        sqlQuery.añadirPremio(1,"campeonato","temporada 1");
+        sqlQuery.InsertarUsuario("PEPE","Perez","pepe","contra","admin");*/
+        sqlQuery.cargarCarrera(1);
     }
 }

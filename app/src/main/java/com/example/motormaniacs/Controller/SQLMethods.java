@@ -3,33 +3,36 @@ package com.example.motormaniacs.Controller;
 
 import static android.content.ContentValues.TAG;
 
+import android.os.AsyncTask;
 import android.database.SQLException;
 import android.util.Log;
 
+import com.example.motormaniacs.Model.Carrera;
 import com.example.motormaniacs.Model.Equipo;
 import com.example.motormaniacs.Model.Piloto;
 import com.example.motormaniacs.Model.Premio;
 import com.example.motormaniacs.Model.Resultado;
-
 import com.mysql.jdbc.Statement;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Scanner;
 
-import kotlin.contracts.Returns;
-
-public class SQLMethods {
+public class SQLMethods extends AsyncTask<Void,Void, Collection> {
 
     private final String TABLA_CARRERAS = "carreras";
     private final String TABLA_EQUIPOS = "equipos";
     private final String TABLA_PILOTOS = "pilotos";
     private final String TABLA_PREMIOS = "premios";
     private final String TABLA_RESULTADOS = "resultados";
+    private final String TABLA_USUARIOS = "usuarios";
     ConnectionClass con_class = new ConnectionClass();
     ReturnMethods returnMethods = new ReturnMethods();
 
+
+    //region SELECT
     public Equipo cargarEquipoNombre(String nombre_equipo){
         Equipo e = new Equipo();
 
@@ -238,6 +241,63 @@ public class SQLMethods {
         return resultados;
     }
 
+    public ArrayList<Resultado> cargarResultadosCarreraID(int id_carrera){
+        ArrayList<Resultado> resultados = new ArrayList<Resultado>();
+
+        try {
+            con_class.CrearConexionMySQL();
+
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+
+            String query_resultado =  "SELECT * FROM "+TABLA_RESULTADOS+" where carrera_id="+id_carrera+";";
+            ResultSet req_resultado = comand.executeQuery(query_resultado);
+
+            while (req_resultado.next()){
+                Resultado res = new Resultado();
+
+                res.setId_resultado(req_resultado.getInt(1));
+                res.setPiloto(kargarUnicoPilotoEquipo(req_resultado.getInt(2),req_resultado.getInt(3)));
+                res.setEquipo(cargarEquipoId(req_resultado.getInt(3)));
+                res.setPosicion(req_resultado.getInt(5));
+                res.setPuntos(req_resultado.getInt(6));
+                resultados.add(res);
+            }
+
+            con_class.getConnection().close();
+        }catch(Exception ex) {
+            System.out.println("Exception: "+ ex.getMessage());
+        }
+
+        return resultados;
+    }
+
+    public Carrera cargarCarrera(int carrera_id){
+        Carrera c = new Carrera();
+
+        try {
+            con_class.CrearConexionMySQL();
+
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+
+            String query_resultado =  "SELECT * FROM "+TABLA_CARRERAS+" where carrera_id="+carrera_id+";";
+            ResultSet req_resultado = comand.executeQuery(query_resultado);
+
+            if (req_resultado.next()){
+
+                c.setId(req_resultado.getInt(1));
+                c.setCircuito(req_resultado.getString(2));
+                c.setFecha(req_resultado.getString(3));
+                c.setPosicion_pilotos(cargarResultadosCarreraID(c.getId()));
+            }
+
+            con_class.getConnection().close();
+        }catch(Exception ex) {
+            System.out.println("Exception: "+ ex.getMessage());
+        }
+
+        return c;
+    }
+
     public Equipo cargarEquipoId(int id_equipo){
         Equipo e = new Equipo();
 
@@ -331,27 +391,9 @@ public class SQLMethods {
         }
         return guardado;
     }
-    public boolean añadirResultado(int piloto, int carrera, int posicion) {
-        boolean guardado = false;
-        try {
-            con_class.CrearConexionMySQL();
 
-            Statement comand = (Statement) con_class.getConnection().createStatement();
-            String query =  "SELECT COUNT(*) FROM "+TABLA_RESULTADOS+" where (Piloto_id, Carrera_id, Posicion) VALUES ('"+piloto+"','"+carrera+"','"+posicion+"')";
-            ResultSet req = comand.executeQuery(query);
-
-            if(req.next()) {
-                if(req.getInt(1)==0){
-                    comand = (Statement) con_class.getConnection().createStatement();
-                    query =  "INSERT INTO "+TABLA_CARRERAS+" (Piloto_id, Carrera_id, Posicion) VALUES ('"+piloto+"','"+carrera+"','"+posicion+"')";
-                    comand.executeUpdate(query);
-                    guardado = true;
-                }
-            }
-            con_class.getConnection().close();
-        } catch (Exception ex) {
-            System.out.println("Exception: " + ex.getMessage());
-        }
-        return guardado;
+    @Override
+    protected Collection doInBackground(Void... voids) {
+        return null;
     }
 }

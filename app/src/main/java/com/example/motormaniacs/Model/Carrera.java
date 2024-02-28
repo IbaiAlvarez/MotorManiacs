@@ -36,7 +36,20 @@ public class Carrera {
 	public void setPosicion_pilotos(ArrayList<Resultado> posicion_pilotos) {
 		Posicion_pilotos = posicion_pilotos;
 	}
-	
-	
 
+	public String getCircuito() {
+		return circuito;
+	}
+
+	public void setCircuito(String circuito) {
+		this.circuito = circuito;
+	}
+
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
 }
