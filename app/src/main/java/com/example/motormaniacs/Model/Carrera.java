@@ -24,12 +24,6 @@ public class Carrera {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getNombre() {
-		return circuito;
-	}
-	public void setNombre(String nombre) {
-		this.circuito = nombre;
-	}
 	public ArrayList<Resultado> getPosicion_pilotos() {
 		return Posicion_pilotos;
 	}

@@ -33,5 +33,6 @@ public class MainActivity extends AppCompatActivity {
         sqlQuery.añadirPremio(1,"campeonato","temporada 1");
         sqlQuery.InsertarUsuario("PEPE","Perez","pepe","contra","admin");*/
         sqlQuery.cargarCarrera(1);
+        sqlQuery.obtenerResultadosCarrera(1);
     }
 }

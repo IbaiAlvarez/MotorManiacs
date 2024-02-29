@@ -8,10 +8,13 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.motormaniacs.Model.Carrera;
+import com.example.motormaniacs.Model.CarreraMostrar;
 import com.example.motormaniacs.Model.Equipo;
 import com.example.motormaniacs.Model.Piloto;
+import com.example.motormaniacs.Model.PosicionPilotos;
 import com.example.motormaniacs.Model.Premio;
 import com.example.motormaniacs.Model.Resultado;
+import com.example.motormaniacs.Model.Usuario;
 import com.mysql.jdbc.Statement;
 
 import java.sql.PreparedStatement;
@@ -33,7 +36,6 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
 
 
     // ╔═════════════════════════════════════════════════════════ CARGA REGION ═════════════════════════════════════════════════════════╗
-
 
     public Equipo cargarEquipoNombre(String nombre_equipo){
         Equipo e = new Equipo();
@@ -60,6 +62,31 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
         }
         return e;
     }
+    public Equipo kargaEquipos(){
+        Equipo e = new Equipo();
+
+        try {
+            con_class.CrearConexionMySQL();
+
+            //Datu baseari konexioa eta Bezeroa logeatzeko kontsulta egiten dugu
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+            String query =  "SELECT * FROM "+TABLA_EQUIPOS+";";
+            ResultSet req = comand.executeQuery(query);
+
+            if(req.next()) {
+                e.setId(req.getInt(1));
+                e.setNombre(req.getString(2));
+                e.setEstado(req.getString(3));
+            }
+
+            e.setPilotos(kargarPilotosEquipo(e.getId()));
+
+            con_class.getConnection().close();
+        }catch(Exception ex) {
+            System.out.println("Exception: "+ ex.getMessage());
+        }
+        return e;
+    }
 
     public ArrayList<Piloto> kargarPilotosEquipo (int id_equipo_seleccionado){
         ArrayList<Piloto> pilotos = new ArrayList<Piloto>();
@@ -70,6 +97,44 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
             //Datu baseari konexioa eta Bezeroa logeatzeko kontsulta egiten dugu
             Statement comand = (Statement) con_class.getConnection().createStatement();
             String query =  "SELECT * FROM "+TABLA_PILOTOS+" where equipo_id='"+id_equipo_seleccionado+"';";
+            ResultSet req = comand.executeQuery(query);
+
+            while(req.next()) {
+                Piloto p = new Piloto();
+
+                p.setId(req.getInt(1));
+                p.setId_equipo(req.getInt(2));
+                p.setNombre(req.getString(3));
+                p.setApellido(req.getString(4));
+                p.setEstado(req.getString(5));
+                p.setNumero(req.getInt(6));
+
+                int[] posiciones = consultarVictoriasPiloto(p.getId());
+
+                p.setTop1(posiciones[0]);
+                p.setTop5(posiciones[1]);
+                p.setTop10(posiciones[2]);
+                p.setCampeonatos(consultarCampeonatosPiloto(p.getId()));
+                p.setValoracion(returnMethods.calcularValoracion(p));
+
+                pilotos.add(p);
+            }
+
+            con_class.getConnection().close();
+        }catch(Exception ex) {
+            System.out.println("Exception: "+ ex.getMessage());
+        }
+        return pilotos;
+    }
+    public ArrayList<Piloto> kargarPilotos(){
+        ArrayList<Piloto> pilotos = new ArrayList<Piloto>();
+
+        try {
+            con_class.CrearConexionMySQL();
+
+            //Datu baseari konexioa eta Bezeroa logeatzeko kontsulta egiten dugu
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+            String query =  "SELECT * FROM "+TABLA_PILOTOS+";";
             ResultSet req = comand.executeQuery(query);
 
             while(req.next()) {
@@ -281,7 +346,7 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
     // ╔═════════════════════════════════════════════════════════ Insert REGION ═════════════════════════════════════════════════════════╗
 
 
-    public boolean añadirPiloto(String nombre, String apellido) {
+    public ArrayList<Piloto> añadirPiloto(ArrayList<Piloto> pilotos, String nombre, String apellido) {
         boolean guardado = false;
         try {
             con_class.CrearConexionMySQL();
@@ -292,9 +357,15 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
 
             if(req.next()) {
                 if(req.getInt(1)==0){
+                    Piloto p = new Piloto();
+                    p.setId(req.getInt(1);
+                    p.setNombre(nombre);
+                    p.setApellido(apellido);
+                    p.setEstado("retirado");
                     comand = (Statement) con_class.getConnection().createStatement();
-                    query =  "INSERT INTO "+TABLA_PILOTOS+" (Nombre, Apellido) VALUES ('"+nombre+"','"+apellido+"')";
+                    query =  "INSERT INTO "+TABLA_PILOTOS+" (Nombre, Apellido, Estado) VALUES ('"+nombre+"','"+apellido+"','retirado')";
                     comand.executeUpdate(query);
+                    pilotos.add(p);
                     guardado = true;
                 }
             }
@@ -302,10 +373,10 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
         } catch (Exception ex) {
             System.out.println("Exception: " + ex.getMessage());
         }
-        return guardado;
+        return pilotos;
     }
 
-    public boolean añadirEquipo(String nombre) {
+    public ArrayList<Equipo> añadirEquipo(ArrayList<Equipo> equipos, String nombre) {
         boolean guardado = false;
         try {
             con_class.CrearConexionMySQL();
@@ -316,9 +387,14 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
 
             if(req.next()) {
                 if(req.getInt(1)==0){
+                    Equipo e = new Equipo();
+                    e.setId(req.getInt(1));
+                    e.setNombre(nombre);
+                    e.setEstado("retirado");
                     comand = (Statement) con_class.getConnection().createStatement();
-                    query =  "INSERT INTO "+TABLA_EQUIPOS+" (Nombre) VALUES ('"+nombre+"')";
+                    query =  "INSERT INTO "+TABLA_EQUIPOS+" (Nombre, Estado) VALUES ('"+nombre+"', 'retirado')";
                     comand.executeUpdate(query);
+                    equipos.add(e)
                     guardado = true;
                 }
             }
@@ -326,10 +402,10 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
         } catch (Exception ex) {
             System.out.println("Exception: " + ex.getMessage());
         }
-        return guardado;
+        return equipos;
     }
 
-    public boolean añadirCarrera(String nombre) {
+    public ArrayList<Carrera> añadirCarrera(ArrayList<Carrera> carreras, String nombre, String fecha) {
         boolean guardado = false;
         try {
             con_class.CrearConexionMySQL();
@@ -340,9 +416,14 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
 
             if(req.next()) {
                 if(req.getInt(1)==0){
+                    Carrera c = new Carrera();
+                    c.setId(req.getInt(1));
+                    c.setCircuito(nombre);
+                    c.setFecha(fecha);
                     comand = (Statement) con_class.getConnection().createStatement();
-                    query =  "INSERT INTO "+TABLA_CARRERAS+" (Nombre) VALUES ('"+nombre+"')";
+                    query =  "INSERT INTO "+TABLA_CARRERAS+" (Nombre, Fecha) VALUES ('"+nombre+"','"+fecha+"')";
                     comand.executeUpdate(query);
+                    carreras.add(c);
                     guardado = true;
                 }
             }
@@ -350,7 +431,7 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
         } catch (Exception ex) {
             System.out.println("Exception: " + ex.getMessage());
         }
-        return guardado;
+        return carreras;
     }
 
     public boolean añadirResultado(int piloto, int carrera, int posicion) {
@@ -436,7 +517,7 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
 
             Statement comand = (Statement) con_class.getConnection().createStatement();
 
-            String query =  "SELECT COUNT(*) FROM "+TABLA_PREMIOS+" WHERE Piloto_id="+piloto_id+" and Nombre='Campeonato'; ";
+            String query =  "SELECT COUNT(*) FROM "+TABLA_PREMIOS+" WHERE Piloto_id="+piloto_id+" and Nombre LIKE '%Campeon%'; ";
             ResultSet req_vicotrias = comand.executeQuery(query);
 
             if(req_vicotrias.next()){
@@ -450,14 +531,237 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
         return victorias;
     }
 
+    public ArrayList<CarreraMostrar> obtenerResultadosCarrera(int id_carrera){
+        ArrayList<CarreraMostrar> resultados = new ArrayList<CarreraMostrar>();
 
+        try {
+            con_class.CrearConexionMySQL();
+
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+
+            String query_resultado =  "SELECT r.Posicion, p.Nombre, p.Apellido, e.Nombre AS Equipo, r.Puntos\n" +
+                    "        FROM "+TABLA_RESULTADOS+" r\n" +
+                    "        JOIN "+TABLA_PILOTOS+" p ON r.Piloto_id = p.Piloto_id\n" +
+                    "        JOIN "+TABLA_EQUIPOS+" e ON p.Equipo_id = e.Equipo_id\n" +
+                    "        WHERE r.Carrera_id = '"+id_carrera+"'\n" +
+                    "        ORDER BY r.Posicion;\n";
+            ResultSet req_resultado = comand.executeQuery(query_resultado);
+
+            while (req_resultado.next()){
+                CarreraMostrar car = new CarreraMostrar();
+                car.setPosicion(req_resultado.getInt(1));
+                car.setNombre(req_resultado.getString(2));
+                car.setApellido(req_resultado.getString(3));
+                car.setEquipo(req_resultado.getString(4));
+                car.setPuntos(req_resultado.getInt(5));
+
+                resultados.add(car);
+            }
+
+            con_class.getConnection().close();
+        }catch(Exception ex) {
+            System.out.println("Exception: "+ ex.getMessage());
+        }
+        return resultados;
+    }
+
+    public ArrayList<PosicionPilotos> obtenerPilotosPorPuntos(){
+        ArrayList<PosicionPilotos> resultados = new ArrayList<PosicionPilotos>();
+
+        try {
+            con_class.CrearConexionMySQL();
+
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+
+            String query_resultado =  "SELECT p.Piloto_id, p.Nombre, p.Apellido, p.Numero, SUM(r.Puntos) AS TotalPuntos\n" +
+                    "FROM "+TABLA_PILOTOS+" p\n" +
+                    "LEFT JOIN "+TABLA_RESULTADOS+" r ON p.Piloto_id = r.Piloto_id\n" +
+                    "LEFT JOIN "+TABLA_CARRERAS+" c ON r.Carrera_id = c.carrera_id\n" +
+                    "WHERE p.Estado = 'compitiendo' AND c.fecha BETWEEN '2024-02-01' AND '2024-11-30'\n" +
+                    "GROUP BY p.Piloto_id, p.Nombre, p.Apellido, p.Numero\n" +
+                    "ORDER BY TotalPuntos DESC;\n";
+            ResultSet req_resultado = comand.executeQuery(query_resultado);
+
+            while (req_resultado.next()){
+                PosicionPilotos pil = new PosicionPilotos();
+                pil.setId(req_resultado.getInt(1));
+                pil.setNombre(req_resultado.getString(2));
+                pil.setApellido(req_resultado.getString(3));
+                pil.setNumero(req_resultado.getInt(4));
+                pil.setPuntos(req_resultado.getInt(5));
+
+                resultados.add(pil);
+            }
+
+            con_class.getConnection().close();
+        }catch(Exception ex) {
+            System.out.println("Exception: "+ ex.getMessage());
+        }
+        return resultados;
+    }
 
 
     // ╔═════════════════════════════════════════════════════════ UPDATE REGION ═════════════════════════════════════════════════════════╗
 
 
+    public ArrayList<Piloto> editarEquipoPiloto (ArrayList<Piloto> pilotos, int idPiloto, int id_EquipoNuevo) {
+        boolean guardado = false;
+        try {
+            con_class.CrearConexionMySQL();
+
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+            String query =  "UPDATE "+TABLA_PILOTOS+" SET Equipo_id = "+id_EquipoNuevo+" WHERE Piloto_id = "+idPiloto+";";
+            int filasAfectadas = comand.executeUpdate(query);
+
+            if (filasAfectadas > 0) {
+                boolean encontrado = false;
+                for (int i = 0;i<pilotos.size()&&encontrado;i++){
+                    if(pilotos.get(i).getId() == idPiloto){
+                        pilotos.get(i).setId_equipo(id_EquipoNuevo);
+                        encontrado = true;
+                    }
+                }
+                guardado = true;
+            }
+            con_class.getConnection().close();
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+        return pilotos;
+    }
+
+    public ArrayList<Piloto> editarPilotoNumero (ArrayList<Piloto> pilotos, int idPiloto, int nuevoNumero) {
+        boolean guardado = false;
+        try {
+            con_class.CrearConexionMySQL();
+
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+            String query =  "UPDATE "+TABLA_PILOTOS+" SET Numero = "+nuevoNumero+" WHERE Piloto_id = "+idPiloto+";";
+            int filasAfectadas = comand.executeUpdate(query);
+
+            if (filasAfectadas > 0) {
+                boolean encontrado = false;
+                for (int i = 0;i<pilotos.size()&&encontrado;i++){
+                    if(pilotos.get(i).getId() == idPiloto){
+                        pilotos.get(i).setNumero(nuevoNumero);
+                        encontrado = true;
+                    }
+                }
+                guardado = true;
+            }
+            con_class.getConnection().close();
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+        return pilotos;
+    }
+
+    public ArrayList<Piloto> editarEstadoPiloto (ArrayList<Piloto> pilotos, int idPiloto, String estado) {
+        boolean guardado = false;
+        try {
+            con_class.CrearConexionMySQL();
+
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+            String query =  "UPDATE "+TABLA_PILOTOS+" SET Estado = "+estado+" WHERE Piloto_id = "+idPiloto+";";
+            int filasAfectadas = comand.executeUpdate(query);
+
+            if (filasAfectadas > 0) {
+                boolean encontrado = false;
+                for (int i = 0;i<pilotos.size()&&encontrado;i++){
+                    if(pilotos.get(i).getId() == idPiloto){
+                        pilotos.get(i).setEstado(estado);
+                        encontrado = true;
+                    }
+                }
+                guardado = true;
+            }
+            con_class.getConnection().close();
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+        return pilotos;
+    }
+
+    public ArrayList<Equipo> editarEstadoEquipo (ArrayList<Equipo> equipos, int idEquipo, String estado) {
+        boolean guardado = false;
+        try {
+            con_class.CrearConexionMySQL();
+
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+            String query =  "UPDATE "+TABLA_EQUIPOS+" SET Estado = "+estado+" WHERE Equipo_id = "+idEquipo+";";
+            int filasAfectadas = comand.executeUpdate(query);
+
+            if (filasAfectadas > 0) {
+                boolean encontrado = false;
+                for (int i = 0;i<equipos.size()&&encontrado;i++){
+                    if(equipos.get(i).getId() == idEquipo){
+                        equipos.get(i).setEstado(estado);
+                        encontrado = true;
+                    }
+                }
+                guardado = true;
+            }
+            con_class.getConnection().close();
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+        return equipos;
+    }
+
+    public ArrayList<Equipo> editarNombreEquipo (ArrayList<Equipo> equipos, int idEquipo, String nombre) {
+        boolean guardado = false;
+        try {
+            con_class.CrearConexionMySQL();
+
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+            String query =  "UPDATE "+TABLA_EQUIPOS+" SET Estado = "+nombre+" WHERE Equipo_id = "+idEquipo+";";
+            int filasAfectadas = comand.executeUpdate(query);
+
+            if (filasAfectadas > 0) {
+                boolean encontrado = false;
+                for (int i = 0;i<equipos.size()&&encontrado;i++){
+                    if(equipos.get(i).getId() == idEquipo){
+                        equipos.get(i).setNombre(nombre);
+                        encontrado = true;
+                    }
+                }
+                guardado = true;
+            }
+            con_class.getConnection().close();
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+        return equipos;
+    }
+
+
     // ╔═════════════════════════════════════════════════════════ DELETE REGION ═════════════════════════════════════════════════════════╗
 
+/*
+    public boolean eliminarUsuario(Usuario usuario) {
+        boolean guardado = false;
+        try {
+            con_class.CrearConexionMySQL();
+
+            Statement comand = (Statement) con_class.getConnection().createStatement();
+            String query =  "DELETE FROM "+TABLA_USUARIOS+" where usuario_id='"+usuario.getId()+"';";
+            ResultSet req = comand.executeQuery(query);
+
+            if(req.next()) {
+                if(req.getInt(1)==0){
+                    comand = (Statement) con_class.getConnection().createStatement();
+                    query =  "INSERT INTO "+TABLA_PILOTOS+" (Nombre, Apellido) VALUES ('"+nombre+"','"+apellido+"')";
+                    comand.executeUpdate(query);
+                    guardado = true;
+                }
+            }
+            con_class.getConnection().close();
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+        return guardado;
+    }
+*/
 
     // ╔═════════════════════════════════════════════════════════ OTROS REGION ═════════════════════════════════════════════════════════╗
 
