@@ -358,7 +358,7 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
             if(req.next()) {
                 if(req.getInt(1)==0){
                     Piloto p = new Piloto();
-                    p.setId(req.getInt(1);
+                    p.setId(req.getInt(1));
                     p.setNombre(nombre);
                     p.setApellido(apellido);
                     p.setEstado("retirado");
@@ -394,7 +394,7 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
                     comand = (Statement) con_class.getConnection().createStatement();
                     query =  "INSERT INTO "+TABLA_EQUIPOS+" (Nombre, Estado) VALUES ('"+nombre+"', 'retirado')";
                     comand.executeUpdate(query);
-                    equipos.add(e)
+                    equipos.add(e);
                     guardado = true;
                 }
             }
@@ -737,7 +737,7 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
 
     // ╔═════════════════════════════════════════════════════════ DELETE REGION ═════════════════════════════════════════════════════════╗
 
-/*
+
     public boolean eliminarUsuario(Usuario usuario) {
         boolean guardado = false;
         try {
@@ -745,15 +745,10 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
 
             Statement comand = (Statement) con_class.getConnection().createStatement();
             String query =  "DELETE FROM "+TABLA_USUARIOS+" where usuario_id='"+usuario.getId()+"';";
-            ResultSet req = comand.executeQuery(query);
+            int filasAfectadas = comand.executeUpdate(query);
 
-            if(req.next()) {
-                if(req.getInt(1)==0){
-                    comand = (Statement) con_class.getConnection().createStatement();
-                    query =  "INSERT INTO "+TABLA_PILOTOS+" (Nombre, Apellido) VALUES ('"+nombre+"','"+apellido+"')";
-                    comand.executeUpdate(query);
-                    guardado = true;
-                }
+            if (filasAfectadas > 0) {
+                guardado = true;
             }
             con_class.getConnection().close();
         } catch (Exception ex) {
@@ -761,7 +756,7 @@ public class SQLMethods extends AsyncTask<Void,Void, Collection> {
         }
         return guardado;
     }
-*/
+
 
     // ╔═════════════════════════════════════════════════════════ OTROS REGION ═════════════════════════════════════════════════════════╗
 
