@@ -1,8 +1,9 @@
 package com.example.motormaniacs.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Equipo {
+public class Equipo implements Serializable {
 	private int id;
 	private String nombre;
 	private String estado;
@@ -56,11 +57,6 @@ public class Equipo {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
-	}
-
-	@Override
-	public String toString() {
-		return nombre + " #" + pilotos.get(0).getNumero() + " #" + pilotos.get(1).getNumero() + " #" + pilotos.get(2).getNumero() +" #" + pilotos.get(3).getNumero();
 	}
 
 }

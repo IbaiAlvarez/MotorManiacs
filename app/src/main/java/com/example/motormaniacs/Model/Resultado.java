@@ -1,22 +1,24 @@
 package com.example.motormaniacs.Model;
 
-public class Resultado {
+import java.io.Serializable;
+
+public class Resultado implements Serializable {
 
     private int id_resultado;
     private Piloto piloto;
     private Equipo equipo;
-    private Carrera carrera;
+    private int id_carrera;
     private int puntos;
     private int posicion;
 
     public Resultado() {
     }
 
-    public Resultado(int id_resultado, Piloto piloto, Equipo equipo, Carrera carrera, int puntos, int posicion) {
+    public Resultado(int id_resultado, Piloto piloto, Equipo equipo, int carrera, int puntos, int posicion) {
         this.id_resultado = id_resultado;
         this.piloto = piloto;
         this.equipo = equipo;
-        this.carrera = carrera;
+        this.id_carrera = carrera;
         this.puntos = puntos;
         this.posicion = posicion;
     }
@@ -45,12 +47,12 @@ public class Resultado {
         this.equipo = equipo;
     }
 
-    public Carrera getCarrera() {
-        return carrera;
+    public int getCarreraId() {
+        return id_carrera;
     }
 
-    public void setCarrera(Carrera carrera) {
-        this.carrera = carrera;
+    public void setCarreraId(int carrera) {
+        this.id_carrera = carrera;
     }
 
     public int getPuntos() {

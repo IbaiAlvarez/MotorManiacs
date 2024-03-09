@@ -1,8 +1,9 @@
 package com.example.motormaniacs.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Carrera {
+public class Carrera implements Serializable {
 	private int id;
 	private String circuito;
 	private String fecha;

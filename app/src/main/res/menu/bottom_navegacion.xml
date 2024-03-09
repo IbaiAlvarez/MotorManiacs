@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/firstFragment"
+        android:id="@+id/btn_carreras"
         android:icon="@android:drawable/ic_input_add"
-        android:title="Primero"></item>
+        android:title="Carreras"></item>
     <item
-        android:id="@+id/secondFragment"
+        android:id="@+id/btn_ountuaciones"
         android:icon="@android:drawable/ic_input_add"
-        android:title="Segundo"></item>
+        android:title="Puntuaciones"></item>
     <item
-        android:id="@+id/thirdFragment"
+        android:id="@+id/btn_usuarios"
         android:icon="@android:drawable/ic_input_add"
-        android:title="Tercero"></item>
+        android:title="Usuarios"></item>
 </menu>

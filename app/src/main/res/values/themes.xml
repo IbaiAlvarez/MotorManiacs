@@ -8,7 +8,7 @@
     <style name="Theme.MotorManiacs" parent="Base.Theme.MotorManiacs" />
     <style name="BottomNavigation">
         <item name="android:background">@color/green_Dark</item>
-        <item name="itemIconTint">@color/green_ligth_2</item>
-        <item name="itemTextColor">@color/green_ligth_2</item>
+        <item name="itemIconTint">@color/custom_blue</item>
+        <item name="itemTextColor">@color/custom_gray</item>
     </style>
 </resources>

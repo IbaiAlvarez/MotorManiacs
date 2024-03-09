@@ -9,4 +9,7 @@
     <color name="green_normal">#044a42</color>
     <color name="green_ligth">#3a9188</color>
     <color name="green_ligth_2">#b8e1dd</color>
+    <color name="custom_blue">#114358</color>
+    <color name="custom_gray">#F1ECE7</color>
+    <color name="custom_background">#3E3E3E</color>
 </resources>
