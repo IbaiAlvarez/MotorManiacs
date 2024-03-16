@@ -2,6 +2,7 @@ package com.example.motormaniacs.Controller;
 
 import android.os.AsyncTask;
 
+import com.example.motormaniacs.Model.Equipo;
 import com.example.motormaniacs.Model.Piloto;
 
 import java.sql.Connection;
@@ -170,6 +171,26 @@ public class ReturnMethods {
         }
 
         return cant;
+    }
+
+    public ArrayList<String> devolverNombrePiltos (ArrayList<Piloto> pilotos){
+        ArrayList<String> nombres = new ArrayList<String>();
+
+        for(int i=0;i<pilotos.size();i++){
+            String nombre = pilotos.get(i).getNombre()+" "+pilotos.get(i).getApellido();
+            nombres.add(nombre);
+        }
+        return nombres;
+    }
+
+    public ArrayList<String> devolverNombreEquipos (ArrayList<Equipo> equipos){
+        ArrayList<String> nombres = new ArrayList<String>();
+
+        for(int i=0;i<equipos.size();i++){
+            String nombre = equipos.get(i).getNombre();
+            nombres.add(nombre);
+        }
+        return nombres;
     }
 
 }

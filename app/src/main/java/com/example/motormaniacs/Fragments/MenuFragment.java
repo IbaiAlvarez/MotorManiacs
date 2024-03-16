@@ -1,5 +1,6 @@
 package com.example.motormaniacs.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,8 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import com.example.motormaniacs.Activity.MainActivity;
+import com.example.motormaniacs.Model.Daos.EquipoDao;
 import com.example.motormaniacs.Model.Daos.PilotoDao;
+import com.example.motormaniacs.Model.Equipo;
 import com.example.motormaniacs.Model.Piloto;
 import com.example.motormaniacs.R;
 
@@ -75,8 +80,13 @@ public class MenuFragment extends Fragment {
     Button btn_añadir_premio;
     Button btn_añadir_resultado;
     Button btn_añadir_carrera;
+    Button btn_editar_piloto;
+    Button btn_editar_equipo;
+    ImageView img_atras_menu;
     ArrayList<Piloto> pilotos = new ArrayList<Piloto>();
+    ArrayList<Equipo> equipos = new ArrayList<Equipo>();
     PilotoDao pDao = new PilotoDao();
+    EquipoDao eDao = new EquipoDao();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,8 +99,12 @@ public class MenuFragment extends Fragment {
         btn_añadir_premio= rootView.findViewById(R.id.btn_añadir_premio);
         btn_añadir_resultado= rootView.findViewById(R.id.btn_añadir_resultado);
         btn_añadir_carrera= rootView.findViewById(R.id.btn_añadir_carrera);
+        btn_editar_piloto= rootView.findViewById(R.id.btn_editar_piloto);
+        btn_editar_equipo= rootView.findViewById(R.id.btn_editar_equipo);
+        img_atras_menu = rootView.findViewById(R.id.img_atras_menu);
 
         pilotos = pDao.cargarPilotos();
+        equipos = eDao.cargarEquipos();
 
         btn_añadir_piloto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +116,28 @@ public class MenuFragment extends Fragment {
                 }
                 // Insert the fragment by replacing any existing fragment
                 fm.beginTransaction().replace(R.id.fragmentContainerAdmins, fragment).commit();
+            }
+        });
+
+        btn_editar_piloto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    fragment = new EditPilotoFragment(fm,pilotos,equipos);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // Insert the fragment by replacing any existing fragment
+                fm.beginTransaction().replace(R.id.fragmentContainerAdmins, fragment).commit();
+            }
+        });
+
+        //Boton para volver atras
+        img_atras_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), MainActivity.class);
+                startActivity(i);
             }
         });
 

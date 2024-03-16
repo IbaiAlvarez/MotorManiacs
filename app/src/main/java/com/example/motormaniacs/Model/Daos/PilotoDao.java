@@ -402,8 +402,11 @@ public class PilotoDao {
             try {
                 Connection conn = DriverManager.getConnection(url, user, password);
                 Statement stmt = conn.createStatement();
-                int req = stmt.executeUpdate("UPDATE "+TABLA_PILOTOS+" SET Equipo_id = '"+equipo_id_param+"', estado = '"+piloto_estado_param+"', numero="+piloto_numero_param+" WHERE Piloto_id = "+piloto_id_param+";");
-
+                if(equipo_id_param!=-1) {
+                    int req = stmt.executeUpdate("UPDATE " + TABLA_PILOTOS + " SET Equipo_id = '" + equipo_id_param + "', estado = '" + piloto_estado_param + "', numero=" + piloto_numero_param + " WHERE Piloto_id = " + piloto_id_param + ";");
+                }else{
+                    int req = stmt.executeUpdate("UPDATE "+TABLA_PILOTOS+" SET Equipo_id = NULL, estado = '"+piloto_estado_param+"', numero="+piloto_numero_param+" WHERE Piloto_id = "+piloto_id_param+";");
+                }
                 boolean encontrado = false;
                 for (int i = 0;i<pilotos_param.size()&&encontrado;i++){
                     if(pilotos_param.get(i).getId() == piloto_id_param){

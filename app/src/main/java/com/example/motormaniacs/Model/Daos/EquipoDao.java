@@ -19,6 +19,7 @@ public class EquipoDao {
     private static final String user = ConexionDatos.getUser();
     private static final String password = ConexionDatos.getPassword();
     private static final String TABLA_EQUIPOS = ConexionDatos.getTABLA_EQUIPOS();
+    private static final String TABLA_PILOTOS = ConexionDatos.getTABLA_PILOTOS();
     public static String  nombre_equipo_param = "";
     public static String  estado_equipo_param = "";
     public static int  equipo_id_param = -1;
@@ -252,6 +253,10 @@ public class EquipoDao {
                     if(req.getInt(1)==0){
                         Statement stmt2 = conn.createStatement();
                         int req2 = stmt2.executeUpdate("UPDATE "+TABLA_EQUIPOS+" SET Estado = '"+estado_equipo_param+"', Nombre='"+nombre_equipo_param+"' WHERE Equipo_id = "+equipo_id_param+";");
+
+                        if(estado_equipo_param.equals("retirado")){
+                            int req3 = stmt2.executeUpdate("UPDATE "+TABLA_PILOTOS+" SET Equipo_Id = NULL WHERE Equipo_Id = "+equipo_id_param+";");
+                        }
 
                         boolean encontrado = false;
                         for (int i = 0;i<equipos_param.size() && encontrado;i++){

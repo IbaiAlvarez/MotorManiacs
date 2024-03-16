@@ -15,14 +15,15 @@
 
         <Button
             android:id="@+id/btn_añadir_premio"
-            android:layout_width="210dp"
+            android:layout_width="190dp"
             android:layout_height="60dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="70dp"
             android:backgroundTint="@color/custom_blue"
             android:text="Añadir Premio"
             android:textColor="@color/white"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.089"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_añadir_equipo" />
 
@@ -30,31 +31,33 @@
             android:id="@+id/btn_añadir_resultado"
             android:layout_width="210dp"
             android:layout_height="60dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="70dp"
             android:backgroundTint="@color/custom_blue"
             android:text="Añadir Resultado"
             android:textColor="@color/white"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_añadir_premio" />
 
         <Button
             android:id="@+id/btn_añadir_carrera"
-            android:layout_width="210dp"
+            android:layout_width="190dp"
             android:layout_height="60dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="70dp"
             android:backgroundTint="@color/custom_blue"
             android:text="Añadir Carrera"
             android:textColor="@color/white"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.941"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_añadir_resultado" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_editar_equipo" />
 
         <Button
             android:id="@+id/btn_añadir_piloto"
-            android:layout_width="210dp"
+            android:layout_width="190dp"
             android:layout_height="60dp"
             android:layout_marginTop="120dp"
             android:backgroundTint="@color/custom_blue"
@@ -62,21 +65,61 @@
             android:textColor="@color/white"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.079"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_editar_piloto"
+            android:layout_width="190dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="120dp"
+            android:backgroundTint="@color/custom_blue"
+            android:text="Editar Piloto"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.941"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btn_añadir_equipo"
-            android:layout_width="210dp"
+            android:layout_width="190dp"
             android:layout_height="60dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="70dp"
             android:backgroundTint="@color/custom_blue"
             android:text="Añadir Equipo"
             android:textColor="@color/white"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.072"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_añadir_piloto" />
+
+        <Button
+            android:id="@+id/btn_editar_equipo"
+            android:layout_width="190dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="70dp"
+            android:backgroundTint="@color/custom_blue"
+            android:text="Editar Equipo"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.941"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_editar_piloto" />
+
+        <ImageView
+            android:id="@+id/img_atras_menu"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_marginTop="104dp"
+            android:src="@drawable/flecha_izq_azul"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.207"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_añadir_resultado" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
