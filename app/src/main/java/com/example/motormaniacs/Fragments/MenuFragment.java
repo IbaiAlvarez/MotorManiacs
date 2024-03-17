@@ -132,6 +132,19 @@ public class MenuFragment extends Fragment {
             }
         });
 
+        btn_añadir_equipo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    fragment = new AddEquipoFragment(fm,equipos);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // Insert the fragment by replacing any existing fragment
+                fm.beginTransaction().replace(R.id.fragmentContainerAdmins, fragment).commit();
+            }
+        });
+
         //Boton para volver atras
         img_atras_menu.setOnClickListener(new View.OnClickListener() {
             @Override

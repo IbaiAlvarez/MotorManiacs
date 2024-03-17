@@ -75,15 +75,25 @@ public class EquipoDao {
         }
     }
 
+    public boolean comprobarEquipoExiste(String nombre_equipo){
+        try {
+            this.nombre_equipo_param = nombre_equipo;
+            return  new ComprobarEquipo().execute().get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return false;
+        }
 
+    }
     //endregion
 
     //region Llamada metodos Insert
 
-    public ArrayList<Equipo> añadirEquipo(String nombre_equipo,ArrayList<Equipo>  equipos) {
+    public ArrayList<Equipo> añadirEquipo(String nombre_equipo,ArrayList<Equipo>  equipos, String estado) {
         try {
             this.nombre_equipo_param = nombre_equipo;
             this.equipos_param = equipos;
+            this.estado_equipo_param = estado;
             return new insertarEquipo().execute().get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
@@ -221,10 +231,10 @@ public class EquipoDao {
                 if(req.next()) {
                     if(req.getInt(1)==0){
                         Statement stmt2 = conn.createStatement();
-                        int req2 = stmt2.executeUpdate("INSERT INTO "+TABLA_EQUIPOS+" (Nombre, Estado) VALUES ('"+nombre_equipo_param+"','retirado');");
+                        int req2 = stmt2.executeUpdate("INSERT INTO "+TABLA_EQUIPOS+" (Nombre, Estado) VALUES ('"+nombre_equipo_param+"','"+estado_equipo_param+"');");
                         Equipo e = new Equipo();
                         e.setNombre(nombre_equipo_param);
-                        e.setEstado("retirado");
+                        e.setEstado(estado_equipo_param);
 
                         equipos_param.add(e);
                     }
@@ -276,6 +286,31 @@ public class EquipoDao {
                 ex.printStackTrace();
             }
             return equipos_param;
+        }
+    }
+
+    private class ComprobarEquipo extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            boolean existe = false;
+            try {
+                Connection conn = DriverManager.getConnection(url, user, password);
+                Statement stmt = conn.createStatement();
+                ResultSet req = stmt.executeQuery("SELECT COUNT(*) FROM "+TABLA_EQUIPOS+" where nombre='"+nombre_equipo_param+"';");
+
+                if(req.next()) {
+                    if(req.getInt(1)!=0){
+                        existe = true;
+                    }
+                }
+
+                req.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return existe;
         }
     }
 }
