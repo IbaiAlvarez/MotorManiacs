@@ -105,7 +105,7 @@ public class EquipoDao {
 
     //region Llamada metodos Update
 
-    public ArrayList<Equipo> editarEquipo(int idEquipo,String nombre_equipo,String estado_equipo, ArrayList<Equipo>  equipos) {
+    public ArrayList<Equipo> editarEquipo(int idEquipo,String nombre_equipo, String estado_equipo, ArrayList<Equipo>  equipos) {
         try {
             this.equipo_id_param  = idEquipo;
             this.nombre_equipo_param = nombre_equipo;
@@ -263,10 +263,6 @@ public class EquipoDao {
                     if(req.getInt(1)==0){
                         Statement stmt2 = conn.createStatement();
                         int req2 = stmt2.executeUpdate("UPDATE "+TABLA_EQUIPOS+" SET Estado = '"+estado_equipo_param+"', Nombre='"+nombre_equipo_param+"' WHERE Equipo_id = "+equipo_id_param+";");
-
-                        if(estado_equipo_param.equals("retirado")){
-                            int req3 = stmt2.executeUpdate("UPDATE "+TABLA_PILOTOS+" SET Equipo_Id = NULL WHERE Equipo_Id = "+equipo_id_param+";");
-                        }
 
                         boolean encontrado = false;
                         for (int i = 0;i<equipos_param.size() && encontrado;i++){
