@@ -25,6 +25,7 @@ public class EquipoDao extends Thread{
     public static int  equipo_id_param = -1;
     public  ArrayList<Equipo>  equipos_param = new ArrayList<Equipo>();
 
+
     //region Llamada metodos Select
     public ArrayList<Equipo> cargarEquipos() {
         try {

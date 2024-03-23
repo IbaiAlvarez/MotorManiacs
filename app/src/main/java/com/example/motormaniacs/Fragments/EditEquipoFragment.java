@@ -146,6 +146,7 @@ public class EditEquipoFragment extends Fragment {
                         }
                         spinner_estado_edit.setEnabled(true);
                         txt_nombre_equipo_edit.setEnabled(true);
+
                         txt_nombre_equipo_edit.setText(e.getNombre());
                     }
                 }else{

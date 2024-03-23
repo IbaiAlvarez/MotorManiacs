@@ -25,7 +25,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner_equipo_edit" />
-
         <TextView
             android:id="@+id/lbl_addCarrera"
             android:layout_width="wrap_content"

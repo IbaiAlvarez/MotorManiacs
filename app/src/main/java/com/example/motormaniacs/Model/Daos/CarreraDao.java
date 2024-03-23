@@ -30,6 +30,7 @@ public class CarreraDao  extends Thread{
     public Carrera  carrera_param = new Carrera();
 
 
+
     //region Llamada metodos Select
 
     public ArrayList<Carrera> cargarCarreras() {

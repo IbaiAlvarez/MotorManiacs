@@ -106,6 +106,7 @@ public class MenuFragment extends Fragment {
         pilotos = pDao.cargarPilotos();
         equipos = eDao.cargarEquipos();
 
+
         btn_añadir_piloto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

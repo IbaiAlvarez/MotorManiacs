@@ -31,6 +31,7 @@ public class PilotoDao  extends Thread{
     public  String  piloto_estado_param = "";
     public  ArrayList<Piloto>  pilotos_param = new ArrayList<Piloto>();
 
+
     //region Llamada metodos Select
 
     public ArrayList<Piloto> cargarPilotos() {

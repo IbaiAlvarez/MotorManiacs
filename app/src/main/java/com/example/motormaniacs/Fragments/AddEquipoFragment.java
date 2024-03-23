@@ -100,7 +100,6 @@ public class AddEquipoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_add_equipo, container, false);
 
-
         txt_nombre_equipo = rootView.findViewById(R.id.txt_nombre_equipo);
         img_atras_addequipo = rootView.findViewById(R.id.img_atras_addequipo);
         btn_guardar_equipo = rootView.findViewById(R.id.btn_guardar_equipo);

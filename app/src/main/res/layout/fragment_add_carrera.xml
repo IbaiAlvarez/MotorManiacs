@@ -18,6 +18,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="116dp"
             android:ems="10"
+
             android:hint="Circuito"
             android:inputType="text"
             android:textColor="@color/white"

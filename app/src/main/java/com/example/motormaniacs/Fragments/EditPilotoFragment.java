@@ -149,8 +149,6 @@ public class EditPilotoFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 selectedPiloto = nombres_pilotos.get(position);
-
-
                 if(!selectedPiloto.equals("Seleccione Piloto")) {
                     //Busca el piloto en la lista
                     Optional<Piloto> p_opt = pilotos.stream().filter(x -> selectedPiloto.equals(x.getNombre() + " " + x.getApellido())).findFirst();

@@ -128,7 +128,6 @@ public class AddCarreraFragment extends Fragment {
                     }else{
                         Toast.makeText(getActivity(), "Ya existe una carrera en esta fecha.", Toast.LENGTH_SHORT).show();
                     }
-
                 }else{
                     Toast.makeText(getActivity(), "Datos invalidos.", Toast.LENGTH_SHORT).show();
                 }

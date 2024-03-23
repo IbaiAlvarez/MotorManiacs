@@ -115,7 +115,7 @@ public class AddPilotoFragment extends Fragment {
                     }else if(validacion==2){
                         Toast.makeText(getActivity(), "El numero seleccionado lo está utilizando otro corredor.",Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                                    }else{
                     Toast.makeText(getActivity(), "Datos invalidos.",Toast.LENGTH_SHORT).show();
                 }
             }

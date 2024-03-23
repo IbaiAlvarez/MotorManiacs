@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Activity.AdminActivity">
-
         <Button
             android:id="@+id/btn_añadir_premio"
             android:layout_width="170dp"
