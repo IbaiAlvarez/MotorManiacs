@@ -14,11 +14,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.motormaniacs.Controller.ReturnMethods;
 import com.example.motormaniacs.Model.Daos.EquipoDao;
 import com.example.motormaniacs.Model.Equipo;
-import com.example.motormaniacs.Model.Piloto;
 import com.example.motormaniacs.R;
 
 import java.util.ArrayList;
@@ -104,12 +104,12 @@ public class EditEquipoFragment extends Fragment {
 
         spinner_equipo_edit = rootView.findViewById(R.id.spinner_equipo_edit);
         spinner_estado_edit = rootView.findViewById(R.id.spinner_estado_edit);
-        btn_guardar_equipo_edit = rootView.findViewById(R.id.btn_guardar_equipo_edit);
-        img_atras_editequipo = rootView.findViewById(R.id.img_atras_editequipo);
-        txt_nombre_equipo_edit = rootView.findViewById(R.id.txt_nombre_equipo_edit);
+        btn_guardar_equipo_edit = rootView.findViewById(R.id.btn_guardar_carrera);
+        img_atras_editequipo = rootView.findViewById(R.id.img_atras_carrera);
+        txt_nombre_equipo_edit = rootView.findViewById(R.id.txt_circuito);
 
-        estados.add("retirado");
         estados.add("compitiendo");
+        estados.add("retirado");
 
         nombres_equipos = returnMethods.devolverNombreEquipos(equipos);
         nombres_equipos.add("Seleccione Equipo");
@@ -134,15 +134,15 @@ public class EditEquipoFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedEquipo = nombres_equipos.get(position);
 
-                if(!selectedEquipo.equals("Seleccione Piloto")) {
-                    Optional<Equipo> e_opt = equipos.stream().filter(x -> selectedEquipo.equals(x.getNombre() + " " + x.getNombre())).findFirst();
+                if(!selectedEquipo.equals("Seleccione Equipo")) {
+                    Optional<Equipo> e_opt = equipos.stream().filter(x -> selectedEquipo.equals(x.getNombre())).findFirst();
                     if (e_opt.isPresent()) {
                         e = e_opt.get();
                         e_anterior = e;
                         if (e.getEstado().equals("compitiendo")) {
-                            spinner_estado_edit.setSelection(1);
+                            spinner_estado_edit.setSelection(0);
                         } else {
-                            spinner_estado_edit.setSelection(2);
+                            spinner_estado_edit.setSelection(1);
                         }
                         spinner_estado_edit.setEnabled(true);
                         txt_nombre_equipo_edit.setEnabled(true);
@@ -173,10 +173,18 @@ public class EditEquipoFragment extends Fragment {
         btn_guardar_equipo_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!selectedEquipo.equals("Seleccione Piloto")) {
-                    e.setNombre(txt_nombre_equipo_edit.getText().toString());
-                    e.setEstado(selectedEstado);
-                    equipos = eDao.editarEquipo(e.getId(),e.getNombre(),e.getEstado(),equipos);
+                if(!selectedEquipo.equals("Seleccione Piloto") && !txt_nombre_equipo_edit.getText().toString().equals("")) {
+                    String nombre = txt_nombre_equipo_edit.getText().toString();
+                    if(!eDao.comprobarEquipoExiste(nombre)) {
+                        e.setNombre(txt_nombre_equipo_edit.getText().toString());
+                        e.setEstado(selectedEstado);
+                        equipos = eDao.editarEquipo(e.getId(), e.getNombre(), e.getEstado(), equipos);
+                        Toast.makeText(getActivity(), "Equipo guardado.", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getActivity(), "Ya existe un equipo con este nombre.", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(getActivity(), "Datos invalidos.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -185,6 +193,7 @@ public class EditEquipoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
+                    btn_guardar_equipo_edit.setEnabled(false);
                     fragment = new MenuFragment(fm);
                 } catch (Exception e) {
                     e.printStackTrace();

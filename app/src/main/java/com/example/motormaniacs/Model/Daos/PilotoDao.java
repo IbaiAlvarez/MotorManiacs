@@ -15,7 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class PilotoDao {
+public class PilotoDao  extends Thread{
 
     private  final String url = ConexionDatos.getUrl();
     private  final String user = ConexionDatos.getUser();

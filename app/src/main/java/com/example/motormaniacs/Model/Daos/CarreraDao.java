@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class CarreraDao {
+public class CarreraDao  extends Thread{
 
     private final String url = ConexionDatos.getUrl();
     private final String user = ConexionDatos.getUser();
@@ -73,14 +73,23 @@ public class CarreraDao {
         }
     }
 
+    public boolean consultarFechaLibre(String fecha) {
+        try {
+            this.fecha_param = fecha_param;
+            return new verificarFecha().execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
+
     //endregion
 
     //region Llamada metodos Insert
-    public boolean insertarCarrera(String circuito, String fecha,Carrera carrera) {
+    public boolean insertarCarrera(String circuito, String fecha) {
         try {
             this.circuito_param = circuito;
             this.fecha_param = fecha;
-            this.carrera_param = carrera;
 
             return new guardarCarrera().execute().get();
 
@@ -193,5 +202,29 @@ public class CarreraDao {
         }
     }
 
+    private class verificarFecha extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            boolean existe = false;
+            try {
+                Connection conn = DriverManager.getConnection(url, user, password);
+                Statement stmt = conn.createStatement();
+                ResultSet req = stmt.executeQuery( "SELECT COUNT(*) FROM "+TABLA_CARRERAS+" where fecha = '"+fecha_param+"';");
+
+                if(req.next()) {
+                    if(req.getInt(1)!=0){
+                        existe = true;
+                    };
+                }
+
+                req.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return existe;
+        }
+    }
 
 }

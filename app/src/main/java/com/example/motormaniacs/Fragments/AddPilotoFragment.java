@@ -125,6 +125,7 @@ public class AddPilotoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
+                    btn_guardar_piloto.setEnabled(false);
                     fragment = new MenuFragment(fm);
                 } catch (Exception e) {
                     e.printStackTrace();

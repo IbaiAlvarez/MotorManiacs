@@ -15,13 +15,13 @@
 
         <Button
             android:id="@+id/btn_añadir_premio"
-            android:layout_width="190dp"
+            android:layout_width="170dp"
             android:layout_height="60dp"
             android:layout_marginTop="70dp"
             android:backgroundTint="@color/custom_blue"
             android:text="Añadir Premio"
             android:textColor="@color/white"
-            android:textSize="20dp"
+            android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.089"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,13 +43,13 @@
 
         <Button
             android:id="@+id/btn_añadir_carrera"
-            android:layout_width="190dp"
+            android:layout_width="170dp"
             android:layout_height="60dp"
             android:layout_marginTop="70dp"
             android:backgroundTint="@color/custom_blue"
             android:text="Añadir Carrera"
             android:textColor="@color/white"
-            android:textSize="20dp"
+            android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.941"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
 
         <Button
             android:id="@+id/btn_añadir_piloto"
-            android:layout_width="190dp"
+            android:layout_width="170dp"
             android:layout_height="60dp"
             android:layout_marginTop="120dp"
             android:backgroundTint="@color/custom_blue"
@@ -71,7 +71,7 @@
 
         <Button
             android:id="@+id/btn_editar_piloto"
-            android:layout_width="190dp"
+            android:layout_width="170dp"
             android:layout_height="60dp"
             android:layout_marginTop="120dp"
             android:backgroundTint="@color/custom_blue"
@@ -85,13 +85,13 @@
 
         <Button
             android:id="@+id/btn_añadir_equipo"
-            android:layout_width="190dp"
+            android:layout_width="170dp"
             android:layout_height="60dp"
             android:layout_marginTop="70dp"
             android:backgroundTint="@color/custom_blue"
             android:text="Añadir Equipo"
             android:textColor="@color/white"
-            android:textSize="20dp"
+            android:textSize="19dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.072"
             app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +99,7 @@
 
         <Button
             android:id="@+id/btn_editar_equipo"
-            android:layout_width="190dp"
+            android:layout_width="170dp"
             android:layout_height="60dp"
             android:layout_marginTop="70dp"
             android:backgroundTint="@color/custom_blue"

@@ -13,7 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class EquipoDao {
+public class EquipoDao extends Thread{
 
     private static final String url = ConexionDatos.getUrl();
     private static final String user = ConexionDatos.getUser();

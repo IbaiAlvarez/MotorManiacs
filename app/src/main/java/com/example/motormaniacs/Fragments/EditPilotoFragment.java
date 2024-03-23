@@ -263,6 +263,7 @@ public class EditPilotoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
+                    btn_edit_piloto.setEnabled(false);
                     fragment = new MenuFragment(fm);
                 } catch (Exception e) {
                     e.printStackTrace();

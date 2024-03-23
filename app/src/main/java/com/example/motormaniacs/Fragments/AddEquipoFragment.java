@@ -170,6 +170,7 @@ public class AddEquipoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
+                    btn_guardar_equipo.setEnabled(false);
                     fragment = new MenuFragment(fm);
                 } catch (Exception e) {
                     e.printStackTrace();

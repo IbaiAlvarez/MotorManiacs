@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.concurrent.ExecutionException;
 
-public class UsuarioDao {
+public class UsuarioDao  extends Thread{
 
     private static final String url = ConexionDatos.getUrl();
     private static final String user = ConexionDatos.getUser();
