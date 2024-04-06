@@ -109,7 +109,7 @@ public class AddCarreraFragment extends Fragment {
                 DatePickerDialog dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        txt_fecha.setText(MessageFormat.format("{0}-{1}-{2}",String.valueOf(year),String.valueOf(month+1),String.valueOf(dayOfMonth)));
+                        txt_fecha.setText(MessageFormat.format("{0}-{1}-{2}",String.valueOf(year),String.format("%02d", (month + 1)),String.format("%02d", (dayOfMonth))));
                     }
                 },year,month,day);
                 dialog.show();

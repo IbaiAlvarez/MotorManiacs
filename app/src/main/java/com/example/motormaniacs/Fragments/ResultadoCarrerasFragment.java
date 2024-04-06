@@ -11,11 +11,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.motormaniacs.Model.Daos.CarreraDao;
 import com.example.motormaniacs.Model.Daos.ResultadoDao;
+import com.example.motormaniacs.Model.Equipo;
 import com.example.motormaniacs.Model.Resultado;
 import com.example.motormaniacs.R;
 import com.google.gson.Gson;
@@ -23,6 +28,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Optional;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,11 +80,20 @@ public class ResultadoCarrerasFragment extends Fragment {
     private TableLayout tabla_carrera;
     private TableLayout tabla_header;
     ArrayList<Resultado> resultados;
+    ArrayList<String> datos_carrera;
     //SharedPreferences
     SharedPreferences sharedpreferences;
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String RESULTADOS_ULTIMA_CARRERA = "resultados_ultima_carrera";
+    public static final String DATOS_ULTIMA_CARRERA = "datos_ultima_carrera";
     final Gson gson = new Gson();
+    Spinner spinner_fecha_carrera;
+    TextView txt_circuito_carrera;
+    ArrayAdapter<String> fechas_adapter;
+    ArrayList<String> fechas_carreras = new ArrayList<String>();
+    CarreraDao cDao = new CarreraDao();
+    String selectedFecha = "";
+    boolean primeraCarga = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,6 +106,16 @@ public class ResultadoCarrerasFragment extends Fragment {
         tabla_carrera.removeAllViews();
         tabla_header = rootView.findViewById(R.id.tabla_header);
         tabla_header.removeAllViews();
+        spinner_fecha_carrera = rootView.findViewById(R.id.spinner_fecha_carrera);
+        txt_circuito_carrera = rootView.findViewById(R.id.txt_circuito_carrera);
+
+        fechas_carreras = cDao.consultarFechas();
+
+        //Spinner Fechas
+        fechas_adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, fechas_carreras);
+        fechas_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_fecha_carrera.setAdapter(fechas_adapter);
+        spinner_fecha_carrera.setSelection(0);
 
         //Shared Preferences Recibir Datos
         sharedpreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
@@ -98,11 +123,41 @@ public class ResultadoCarrerasFragment extends Fragment {
         Type type = new TypeToken<ArrayList<Resultado>>(){}.getType();
         resultados = gson.fromJson(json, type);
 
+        json = sharedpreferences.getString(DATOS_ULTIMA_CARRERA, "");
+        type = new TypeToken<ArrayList<String>>(){}.getType();
+        datos_carrera = gson.fromJson(json, type);
+
+        txt_circuito_carrera.setText(datos_carrera.get(1));
+
         //Vuelca los datos a las tablas
         cargarTabla();
         tabla_header.bringToFront();
         tabla_carrera.bringToFront();
 
+        spinner_fecha_carrera.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(!primeraCarga){
+                    selectedFecha = fechas_carreras.get(position);
+
+                    txt_circuito_carrera.setText(cDao.consultarCircuito(selectedFecha.toString()));
+                    int id_carrera = cDao.consultarIdCarrera(selectedFecha);
+                    resultados = rDao.cargarResultadosCarreraId(id_carrera);
+
+                    tabla_carrera.removeAllViews();
+                    //Vuelca los datos a las tablas
+                    cargarTabla();
+                    tabla_header.bringToFront();
+                    tabla_carrera.bringToFront();
+
+                }else{
+                    primeraCarga = false;
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         // Inflate the layout for this fragment
         return rootView;

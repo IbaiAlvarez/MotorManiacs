@@ -84,6 +84,45 @@ public class CarreraDao  extends Thread{
         }
     }
 
+    public ArrayList<String> consultarFechas() {
+        try {
+            return new obtenerFechas().execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String consultarCircuito(String fecha) {
+        try {
+            this.fecha_param = fecha;
+            return new obtenerCircuitoNombre().execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<String> consultarCarrera(int carrera_id) {
+        try {
+            this.carrera_id_param = carrera_id;
+            return new obtenerCircuitoDatos().execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int consultarIdCarrera(String fecha) {
+        try {
+            this.fecha_param = fecha;
+            return new obtenerIdCarrera().execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
     //endregion
 
     //region Llamada metodos Insert
@@ -228,4 +267,97 @@ public class CarreraDao  extends Thread{
         }
     }
 
+    private class obtenerFechas extends AsyncTask<Void, Void, ArrayList<String>> {
+        @Override
+        protected ArrayList<String> doInBackground(Void... voids) {
+            ArrayList<String> fechas = new ArrayList<String>();
+            try {
+                Connection conn = DriverManager.getConnection(url, user, password);
+                Statement stmt = conn.createStatement();
+                ResultSet req = stmt.executeQuery( "SELECT fecha FROM "+TABLA_CARRERAS+" ORDER by fecha DESC;");
+
+                while (req.next()) {
+                    fechas.add(req.getString(1));
+                }
+
+                req.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return fechas;
+        }
+    }
+
+    private class obtenerCircuitoNombre extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... voids) {
+            String nombre = "";
+            try {
+                Connection conn = DriverManager.getConnection(url, user, password);
+                Statement stmt = conn.createStatement();
+                ResultSet req = stmt.executeQuery( "SELECT circuito FROM "+TABLA_CARRERAS+" WHERE fecha= '"+fecha_param+"';");
+
+                if(req.next()) {
+                    nombre = req.getString(1);
+                }
+
+                req.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return nombre;
+        }
+    }
+
+    private class obtenerCircuitoDatos extends AsyncTask<Void, Void, ArrayList<String>> {
+        @Override
+        protected ArrayList<String> doInBackground(Void... voids) {
+            ArrayList<String> datos = new ArrayList<String>();
+            try {
+                Connection conn = DriverManager.getConnection(url, user, password);
+                Statement stmt = conn.createStatement();
+                ResultSet req = stmt.executeQuery( "SELECT carrera_id,circuito,fecha FROM "+TABLA_CARRERAS+" WHERE carrera_id= '"+carrera_id_param+"';");
+
+                if(req.next()) {
+                    datos.add(req.getString(1));
+                    datos.add(req.getString(2));
+                    datos.add(req.getString(3));
+                }
+
+                req.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return datos;
+        }
+    }
+
+    private class obtenerIdCarrera extends AsyncTask<Void, Void, Integer> {
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            int id_carrera = -1;
+            try {
+                Connection conn = DriverManager.getConnection(url, user, password);
+                Statement stmt = conn.createStatement();
+                ResultSet req = stmt.executeQuery( "SELECT carrera_id FROM "+TABLA_CARRERAS+" WHERE fecha= '"+fecha_param+"';");
+
+                if(req.next()) {
+                    id_carrera = req.getInt(1);
+                }
+
+                req.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return id_carrera;
+        }
+    }
 }

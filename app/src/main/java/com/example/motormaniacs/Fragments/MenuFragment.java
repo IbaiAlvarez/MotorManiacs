@@ -20,6 +20,10 @@ import com.example.motormaniacs.Model.Piloto;
 import com.example.motormaniacs.R;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -103,7 +107,25 @@ public class MenuFragment extends Fragment {
         btn_editar_equipo= rootView.findViewById(R.id.btn_editar_equipo);
         img_atras_menu = rootView.findViewById(R.id.img_atras_menu);
 
-        pilotos = pDao.cargarPilotos();
+        // Crear una instancia de tu clase PilotoDao
+        PilotoDao pilotoDao = new PilotoDao("obtenerPilotos");
+
+        // Crear un ExecutorService con un solo hilo
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        // Enviar la tarea al ExecutorService
+        Future<Object> future = executor.submit(pilotoDao);
+
+        try {
+            // Obtener el resultado
+            pilotos = (ArrayList<Piloto>) future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        // Apagar el ExecutorService cuando ya no se necesite
+        executor.shutdown();
+
+        //pilotos = pDao.cargarPilotos();
         equipos = eDao.cargarEquipos();
 
 

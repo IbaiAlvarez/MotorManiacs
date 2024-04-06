@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedpreferences;
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String RESULTADOS_ULTIMA_CARRERA = "resultados_ultima_carrera";
+    public static final String DATOS_ULTIMA_CARRERA = "datos_ultima_carrera";
     final Gson gson = new Gson();
     private ResultadoDao rDao = new ResultadoDao();
     private CarreraDao cDao = new CarreraDao();
@@ -75,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
             resultados_ultima_carrera = rDao.cargarResultadosUltimaCarrera();
             String json_guardar = gson.toJson(resultados_ultima_carrera);
             editor.putString(RESULTADOS_ULTIMA_CARRERA, json_guardar);
+
+            ArrayList<String> datosCircuito = cDao.consultarCarrera(ultima_carrera_id);
+            String json_guardar_datos = gson.toJson(datosCircuito);
+            editor.putString(DATOS_ULTIMA_CARRERA, json_guardar_datos);
 
             editor.apply();
         }
