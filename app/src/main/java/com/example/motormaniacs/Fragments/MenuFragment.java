@@ -181,11 +181,25 @@ public class MenuFragment extends Fragment {
             }
         });
 
+
         btn_añadir_carrera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     fragment = new AddCarreraFragment(fm);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // Insert the fragment by replacing any existing fragment
+                fm.beginTransaction().replace(R.id.fragmentContainerAdmins, fragment).commit();
+            }
+        });
+
+        btn_añadir_resultado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    fragment = new AddResultadoFragment(fm,pilotos);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -26,7 +26,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/custom_blue"
         android:elevation="8dp"
-        app:itemIconTint="@color/custom_gray"
+        app:itemIconTint="@color/black"
         app:labelVisibilityMode="selected"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
