@@ -1,0 +1,4 @@
+- Para poder ejecutar la aplicación es necesario el uso de XAMPP y ejecutar el archivo motormaniacsDatos.sql de nuestra base de datos que esta adjuntado en el repositorio. 
+- Una vez creada la base de datos 'motormaniacs' es necesario crear el usuario 'administrador' con la contraseña 'Elorrieta00' y darle permisos para todo. 
+- Por último en la aplicación en Model/Conexion/ConexionDatos.java es necesario cambiar la variable 'url' y poner su ip correspondiente.
+- Una vez realizado esos pasos la aplicación funcionara correctamente, y para entrar como administrador en el Login el usuario que nosotros utilizamos es 'Pepe' y la contraseña 'contra'.
