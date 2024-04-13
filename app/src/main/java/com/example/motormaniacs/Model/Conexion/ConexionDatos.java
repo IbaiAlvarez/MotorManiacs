@@ -2,7 +2,7 @@ package com.example.motormaniacs.Model.Conexion;
 
 public class ConexionDatos {
 
-    private static final String url = "jdbc:mysql://192.168.1.124:3306/motormaniacs?autoReconnect=true&useSSL=false";
+    private static final String url = "jdbc:mysql://192.168.1.35:3306/motormaniacs?autoReconnect=true&useSSL=false";
     private static final String user = "administrador";
     private static final String password = "Elorrieta00";
     private static final String TABLA_CARRERAS = "carreras";

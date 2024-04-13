@@ -27,12 +27,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/btn_guardar_carrera"
+            android:id="@+id/btn_guardar_resultado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:backgroundTint="@color/custom_blue"
-            android:text="Guardar Equipo"
+            android:text="Guardar Resultado"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.155"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_guardar_carrera"
+            app:layout_constraintTop_toBottomOf="@+id/btn_guardar_resultado"
             android:layout_width="50sp"
             android:layout_height="50sp"
             android:layout_marginTop="80dp"
@@ -79,6 +79,7 @@
             android:ems="10"
             android:hint="Posicion"
             android:inputType="number"
+            android:textColor="@color/white"
             android:textColorHint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -66,12 +66,13 @@ public class ResultadoDao  extends Thread{
 
 
     //region Llamada metodos Insert
-    public boolean insertarResultado(int piloto, int carrera, int posicion,int puntos) {
+    public boolean insertarResultado(int piloto_id, int equipo_id, int carrera, int posicion, int puntos) {
         try {
-            this.piloto_id_param = piloto;
+            this.piloto_id_param = piloto_id;
             this.carrera_id_param = carrera;
             this.posicion_param = posicion;
             this.puntos_param = puntos;
+            this.equipo_id_param = equipo_id;
             return new guardarResultado().execute().get();
 
         } catch (InterruptedException | ExecutionException e) {
@@ -184,7 +185,7 @@ public class ResultadoDao  extends Thread{
             try {
                 Connection conn = DriverManager.getConnection(url, user, password);
                 Statement stmt = conn.createStatement();
-                ResultSet req = stmt.executeQuery("SELECT COUNT(*) FROM "+TABLA_RESULTADOS+" where carrera_id="+carrera_id_param+" and piloto_id="+piloto_id_param+" and equipo_id="+equipo_id_param+";");
+                ResultSet req = stmt.executeQuery("SELECT COUNT(*) FROM "+TABLA_RESULTADOS+" where carrera_id="+carrera_id_param+" and (piloto_id="+piloto_id_param+" OR posicion="+posicion_param+");");
 
                 if(req.next()) {
                     if(req.getInt(1)==0){
@@ -203,4 +204,5 @@ public class ResultadoDao  extends Thread{
             return guardado;
         }
     }
+
 }

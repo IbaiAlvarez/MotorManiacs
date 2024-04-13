@@ -123,6 +123,24 @@ public class CarreraDao  extends Thread{
         }
     }
 
+    public ArrayList<String> consultarFechasIncompeltas() {
+        try {
+            return new obtenerFechasIncompletas().execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<Integer> consultarPilotosCarrera(int carrera_id) {
+        try {
+            this.carrera_id_param = carrera_id;
+            return new obtenerPilotosCarrera().execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     //endregion
 
     //region Llamada metodos Insert
@@ -360,4 +378,54 @@ public class CarreraDao  extends Thread{
             return id_carrera;
         }
     }
+
+    private class obtenerFechasIncompletas extends AsyncTask<Void, Void, ArrayList<String>> {
+        @Override
+        protected ArrayList<String> doInBackground(Void... voids) {
+            ArrayList<String> fechas = new ArrayList<String>();
+            try {
+                Connection conn = DriverManager.getConnection(url, user, password);
+                Statement stmt = conn.createStatement();
+                ResultSet req = stmt.executeQuery("Select fecha from "+TABLA_CARRERAS+" c inner join "+TABLA_RESULTADOS+" r on c.carrera_id = r.Carrera_id GROUP BY c.fecha HAVING COUNT(r.Resultado_id)<36;");
+
+                while (req.next()) {
+                    String fecha = req.getString(1);
+                    fechas.add(fecha);
+                }
+
+                req.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return fechas;
+        }
+    }
+
+    private class obtenerPilotosCarrera extends AsyncTask<Void, Void, ArrayList<Integer>> {
+        @Override
+        protected ArrayList<Integer> doInBackground(Void... voids) {
+            ArrayList<Integer> pilotos = new ArrayList<Integer>();
+            try {
+                Connection conn = DriverManager.getConnection(url, user, password);
+                Statement stmt = conn.createStatement();
+                ResultSet req = stmt.executeQuery("SELECT piloto_id from "+TABLA_RESULTADOS+" where carrera_id="+carrera_id_param+";");
+
+                while (req.next()) {
+                    int id_piloto = req.getInt(1);
+                    pilotos.add(id_piloto);
+                }
+
+                req.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return pilotos;
+        }
+    }
+
+
 }

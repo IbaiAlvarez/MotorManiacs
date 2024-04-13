@@ -183,6 +183,18 @@ public class ReturnMethods {
         return nombres;
     }
 
+    public ArrayList<String> devolverPilotosActivos (ArrayList<Piloto> pilotos){
+        ArrayList<String> nombres = new ArrayList<String>();
+
+        for(int i=0;i<pilotos.size();i++){
+            if(pilotos.get(i).getEstado().equals("compitiendo") && pilotos.get(i).getId_equipo()!=-1 && pilotos.get(i).getId_equipo()!=0) {
+                String nombre = pilotos.get(i).getNombre() + " " + pilotos.get(i).getApellido();
+                nombres.add(nombre);
+            }
+        }
+        return nombres;
+    }
+
     public ArrayList<String> devolverNombreEquipos (ArrayList<Equipo> equipos){
         ArrayList<String> nombres = new ArrayList<String>();
 
