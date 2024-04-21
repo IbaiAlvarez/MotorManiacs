@@ -10,7 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
 
-import com.example.motormaniacs.Fragments.SecondFragment;
+import com.example.motormaniacs.Fragments.PremiosFragment;
 import com.example.motormaniacs.Fragments.UsuarioFragment;
 import com.example.motormaniacs.Fragments.ResultadoCarrerasFragment;
 import com.example.motormaniacs.Model.Daos.CarreraDao;
@@ -28,7 +28,7 @@ import com.google.gson.reflect.TypeToken;
 public class MainActivity extends AppCompatActivity {
 
     ResultadoCarrerasFragment fragmentCarreras = new ResultadoCarrerasFragment();
-    SecondFragment secondFragment = new SecondFragment();
+    PremiosFragment secondFragment = new PremiosFragment();
     UsuarioFragment thirdFragment = new UsuarioFragment();
 
     private static final int carrerasFragment = R.id.btn_carreras;
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             if (itemId == carrerasFragment) {
                 fragment_nuevo_2 = new ResultadoCarrerasFragment();
             } else if (itemId == puntuacionesFragment) {
-                fragment_nuevo_2 = new SecondFragment();
+                fragment_nuevo_2 = new PremiosFragment();
 
             } else if (itemId == usuarios) {
                 fragment_nuevo_2 = new UsuarioFragment();

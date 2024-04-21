@@ -104,7 +104,7 @@ public class EditEquipoFragment extends Fragment {
 
         spinner_equipo_edit = rootView.findViewById(R.id.spinner_fecha_resultado);
         spinner_estado_edit = rootView.findViewById(R.id.spinner_piloto_resultado);
-        btn_guardar_equipo_edit = rootView.findViewById(R.id.btn_guardar_resultado);
+        btn_guardar_equipo_edit = rootView.findViewById(R.id.btn_guardar_premio);
         img_atras_editequipo = rootView.findViewById(R.id.img_atras_carrera);
         txt_nombre_equipo_edit = rootView.findViewById(R.id.txt_circuito);
 

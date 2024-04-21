@@ -90,7 +90,7 @@ public class AddCarreraFragment extends Fragment {
 
         txt_circuito = rootView.findViewById(R.id.txt_circuito);
         txt_fecha = rootView.findViewById(R.id.txt_fecha);
-        btn_guardar_carrera = rootView.findViewById(R.id.btn_guardar_resultado);
+        btn_guardar_carrera = rootView.findViewById(R.id.btn_guardar_premio);
         img_calendario = rootView.findViewById(R.id.img_calendario);
         img_atras_carrera = rootView.findViewById(R.id.img_atras_carrera);
 

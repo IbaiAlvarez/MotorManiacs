@@ -203,7 +203,7 @@ public class PilotoDao implements Callable<Object> {
 
                     //Obtiene los campeonatos ganados del piloto
                     Statement stmt3 = conn.createStatement();
-                    ResultSet req3 = stmt3.executeQuery("SELECT COUNT(*) FROM "+TABLA_PREMIOS+" WHERE Piloto_id="+p.getId()+" and Nombre='Campeonato'; ");
+                    ResultSet req3 = stmt3.executeQuery("SELECT COUNT(*) FROM "+TABLA_PREMIOS+" WHERE Piloto_id="+p.getId()+" and Premio='Campeon'; ");
 
                     if(req3.next()){
                         p.setCampeonatos(req3.getInt(1));

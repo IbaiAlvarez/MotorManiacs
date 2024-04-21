@@ -1,6 +1,5 @@
 package com.example.motormaniacs.Fragments;
 
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -20,7 +19,6 @@ import android.widget.Toast;
 import com.example.motormaniacs.Controller.ReturnMethods;
 import com.example.motormaniacs.Model.Daos.CarreraDao;
 import com.example.motormaniacs.Model.Daos.ResultadoDao;
-import com.example.motormaniacs.Model.Equipo;
 import com.example.motormaniacs.Model.Piloto;
 import com.example.motormaniacs.R;
 

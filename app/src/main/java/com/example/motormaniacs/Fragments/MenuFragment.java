@@ -106,26 +106,26 @@ public class MenuFragment extends Fragment {
         btn_editar_piloto= rootView.findViewById(R.id.btn_editar_piloto);
         btn_editar_equipo= rootView.findViewById(R.id.btn_editar_equipo);
         img_atras_menu = rootView.findViewById(R.id.img_atras_menu);
-
-        // Crear una instancia de tu clase PilotoDao
+/*
+        // Crear una instancia de PilotoDao
         PilotoDao pilotoDao = new PilotoDao("obtenerPilotos");
 
-        // Crear un ExecutorService con un solo hilo
+        // Crea un ExecutorService con un solo hilo
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
-        // Enviar la tarea al ExecutorService
+        // Envia la tarea al ExecutorService
         Future<Object> future = executor.submit(pilotoDao);
 
         try {
-            // Obtener el resultado
+            // Obtiene el resultado
             pilotos = (ArrayList<Piloto>) future.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-        // Apagar el ExecutorService cuando ya no se necesite
+        // Apaga el ExecutorService cuando ya no se necesite
         executor.shutdown();
-
-        //pilotos = pDao.cargarPilotos();
+*/
+        pilotos = pDao.cargarPilotos();
         equipos = eDao.cargarEquipos();
 
 
@@ -200,6 +200,19 @@ public class MenuFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     fragment = new AddResultadoFragment(fm,pilotos);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // Insert the fragment by replacing any existing fragment
+                fm.beginTransaction().replace(R.id.fragmentContainerAdmins, fragment).commit();
+            }
+        });
+
+        btn_añadir_premio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    fragment = new AddPremioFragment(fm,pilotos);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -6,6 +6,7 @@ public class Premio {
 	private Piloto piloto = new Piloto();
 	private Equipo equipo = new Equipo();
 	private String temporada;
+	private int cantidad;
 	
 	public Premio (int id, String nombre, Piloto piloto, Equipo equipo, String temporada) {
 		this.id = id;
@@ -19,6 +20,8 @@ public class Premio {
 		this.nombre = nombre;
 		this.piloto = piloto;
 	}
+
+	public Premio(){}
 
 	public int getId() {
 		return id;
@@ -36,16 +39,20 @@ public class Premio {
 		this.nombre = nombre;
 	}
 
-	public Piloto getPilotos() {
+	public Piloto getPiloto() {
 		return piloto;
 	}
 
-	public void setPilotos(Piloto pilotos) {
-		this.piloto = pilotos;
+	public void setPiloto(Piloto piloto) {
+		this.piloto = piloto;
 	}
-	
-	@Override
-	public String toString() {
-		return nombre + " /"+ piloto ;
+
+	public int getCantidad() {
+		return cantidad;
 	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
 }

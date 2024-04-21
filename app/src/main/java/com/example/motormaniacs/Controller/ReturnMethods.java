@@ -205,4 +205,14 @@ public class ReturnMethods {
         return nombres;
     }
 
+    public ArrayList<String> cargarPremios (){
+        ArrayList<String> premios = new ArrayList<String>();
+
+        premios.add("Campeon Temporada");
+        premios.add("Novato del Año");
+        premios.add("Campeon");
+        premios.add("Piloto Favorito del Año");
+
+        return premios;
+    }
 }
