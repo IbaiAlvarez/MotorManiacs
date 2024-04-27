@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 
 import com.example.motormaniacs.Fragments.PremiosFragment;
+import com.example.motormaniacs.Fragments.PuntuacionesFragment;
 import com.example.motormaniacs.Fragments.UsuarioFragment;
 import com.example.motormaniacs.Fragments.ResultadoCarrerasFragment;
 import com.example.motormaniacs.Model.Daos.CarreraDao;
@@ -32,8 +33,9 @@ public class MainActivity extends AppCompatActivity {
     UsuarioFragment thirdFragment = new UsuarioFragment();
 
     private static final int carrerasFragment = R.id.btn_carreras;
+    private static final int premiosFragment = R.id.btn_premios;
 
-    private static final int puntuacionesFragment = R.id.btn_ountuaciones;
+    private static final int puntuacionesFragment = R.id.btn_puntuaciones;
     private static final int usuarios = R.id.btn_usuarios;
     FragmentManager fm = getSupportFragmentManager();
     Fragment fragment;
@@ -94,10 +96,11 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment_nuevo_2= new ResultadoCarrerasFragment();
             if (itemId == carrerasFragment) {
                 fragment_nuevo_2 = new ResultadoCarrerasFragment();
-            } else if (itemId == puntuacionesFragment) {
+            } else if (itemId == premiosFragment) {
                 fragment_nuevo_2 = new PremiosFragment();
-
-            } else if (itemId == usuarios) {
+            } else if (itemId == puntuacionesFragment) {
+                fragment_nuevo_2 = new PuntuacionesFragment();
+            }else if (itemId == usuarios) {
                 fragment_nuevo_2 = new UsuarioFragment();
             }
             fragmentTransaction_2.replace(R.id.fragment_container, fragment_nuevo_2);

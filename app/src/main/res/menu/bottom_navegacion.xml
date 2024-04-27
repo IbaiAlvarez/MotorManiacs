@@ -5,8 +5,12 @@
         android:icon="@drawable/carreras"
         android:title="Carreras"></item>
     <item
-        android:id="@+id/btn_ountuaciones"
+        android:id="@+id/btn_premios"
         android:icon="@drawable/trofeo"
+        android:title="Puntuaciones"></item>
+    <item
+        android:id="@+id/btn_puntuaciones"
+        android:icon="@drawable/clasificacion"
         android:title="Puntuaciones"></item>
     <item
         android:id="@+id/btn_usuarios"

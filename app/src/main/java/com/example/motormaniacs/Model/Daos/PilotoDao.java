@@ -108,6 +108,15 @@ public class PilotoDao implements Callable<Object> {
         }
     }
 
+    public ArrayList<Piloto> cargarPuntosPilotos() {
+        try {
+            ArrayList<Piloto> pilotos = new obtenerPuntosPilotos().execute().get();
+            return pilotos;
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public int cargarIdEquipo(int id_piloto) {
         try {
@@ -468,6 +477,36 @@ public class PilotoDao implements Callable<Object> {
         }
     }
 
+    private class obtenerPuntosPilotos extends AsyncTask<Void, Void, ArrayList<Piloto>> {
+        @Override
+        protected ArrayList<Piloto> doInBackground(Void... voids) {
+            ArrayList<Piloto> pilotos = new ArrayList<Piloto>();
+
+            try {
+                Connection conn = DriverManager.getConnection(url, user, password);
+                Statement stmt = conn.createStatement();
+                ResultSet req = stmt.executeQuery("SELECT r.Piloto_id,p.Nombre,p.Apellido, SUM(Puntos) Puntos FROM "+TABLA_RESULTADOS+" r JOIN "+TABLA_PILOTOS+" p ON r.Piloto_id = p.Piloto_id GROUP BY r.Piloto_id ORDER BY `Puntos` DESC;");
+
+                while(req.next()) {
+                    Piloto p = new Piloto();
+
+                    p.setId(req.getInt(1));
+                    p.setNombre(req.getString(2));
+                    p.setApellido(req.getString(3));
+                    p.setPuntos(req.getInt(4));
+
+                    pilotos.add(p);
+                }
+
+                req.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return pilotos;
+        }
+    }
 
     @Override
     public Object call() throws Exception {

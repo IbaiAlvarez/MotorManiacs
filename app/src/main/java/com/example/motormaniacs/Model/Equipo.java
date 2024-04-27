@@ -7,11 +7,13 @@ public class Equipo implements Serializable {
 	private int id;
 	private String nombre;
 	private String estado;
+	private int puntuacion;
 	private ArrayList<Piloto> pilotos = new ArrayList<Piloto>();
 	
 	public Equipo () {
 		this.id = 0;
 		this.nombre= "";
+		this.puntuacion = 0;
 		this.pilotos = new ArrayList<Piloto>();
 	}
 	public Equipo (int id, String nombre,String estado, ArrayList<Piloto> pilotos) {
@@ -59,5 +61,12 @@ public class Equipo implements Serializable {
 		this.estado = estado;
 	}
 
+	public int getPuntuacion() {
+		return puntuacion;
+	}
+
+	public void setPuntuacion(int puntuacion) {
+		this.puntuacion = puntuacion;
+	}
 }
 

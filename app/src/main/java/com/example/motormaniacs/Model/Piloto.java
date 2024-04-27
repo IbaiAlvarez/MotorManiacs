@@ -16,7 +16,7 @@ public class Piloto implements Serializable {
 	private int valoracion;
 	private int temporadas;
 	private String estado;
-	//private int puntos;
+	private int puntos;
 	private ArrayList<Resultado> ResultadosPiloto =new ArrayList<Resultado>();
 
 
@@ -136,4 +136,11 @@ public class Piloto implements Serializable {
 		this.id_equipo = id_equipo;
 	}
 
+	public int getPuntos() {
+		return puntos;
+	}
+
+	public void setPuntos(int puntos) {
+		this.puntos = puntos;
+	}
 }

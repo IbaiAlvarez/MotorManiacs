@@ -1,7 +1,9 @@
 package com.example.motormaniacs.Model.Daos;
 
+import android.media.audiofx.DynamicsProcessing;
 import android.os.AsyncTask;
 
+import com.example.motormaniacs.Fragments.EditEquipoFragment;
 import com.example.motormaniacs.Model.Conexion.ConexionDatos;
 import com.example.motormaniacs.Model.Equipo;
 
@@ -20,6 +22,7 @@ public class EquipoDao extends Thread{
     private static final String password = ConexionDatos.getPassword();
     private static final String TABLA_EQUIPOS = ConexionDatos.getTABLA_EQUIPOS();
     private static final String TABLA_PILOTOS = ConexionDatos.getTABLA_PILOTOS();
+    private static final String TABLA_RESULTADOS = ConexionDatos.getTABLA_RESULTADOS();
     public static String  nombre_equipo_param = "";
     public static String  estado_equipo_param = "";
     public static int  equipo_id_param = -1;
@@ -70,6 +73,15 @@ public class EquipoDao extends Thread{
     public ArrayList<String> cargarNombresEquipos() {
         try {
             return new ObtenerNombresEquipos().execute().get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<Equipo> cargarPuntuacionEquipos() {
+        try {
+            return new ObtenerPuntuacionEquipos().execute().get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return null;
@@ -169,6 +181,7 @@ public class EquipoDao extends Thread{
             }
             return e;
         }
+
     }
 
     private class ObtenerEquipoById extends AsyncTask<Void, Void, Equipo> {
@@ -309,5 +322,34 @@ public class EquipoDao extends Thread{
             }
             return existe;
         }
+    }
+
+    private class ObtenerPuntuacionEquipos extends AsyncTask<Void, Void, ArrayList<Equipo>> {
+        @Override
+        protected ArrayList<Equipo> doInBackground(Void... voids) {
+            ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+
+            try {
+                Connection conn = DriverManager.getConnection(url, user, password);
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT r.Equipo_id,e.Nombre, SUM(Puntos) Puntos FROM "+ TABLA_RESULTADOS+" r JOIN "+TABLA_EQUIPOS+" e ON r.Equipo_id = e.Equipo_id GROUP BY r.Equipo_id ORDER BY `Puntos` DESC;");
+
+                while(rs.next()) {
+                    Equipo e = new Equipo();
+                    e.setId(rs.getInt(1));
+                    e.setNombre(rs.getString(2));
+                    e.setPuntuacion(rs.getInt(3));
+                    equipos.add(e);
+                }
+
+                rs.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException ex) {
+            }
+            return equipos;
+        }
+
+
     }
 }
