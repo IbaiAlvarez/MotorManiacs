@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-03-2024 a las 08:33:41
+-- Tiempo de generación: 07-05-2024 a las 11:44:02
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -71,7 +71,8 @@ INSERT INTO `carreras` (`carrera_id`, `circuito`, `fecha`) VALUES
 (31, 'Road America', '2024-09-08'),
 (32, 'Auto Club Speedway', '2024-09-15'),
 (33, 'Charlotte Roval', '2024-09-22'),
-(34, 'Indianapolis Motor Speedway (Road)', '2024-09-29');
+(34, 'Indianapolis Motor Speedway (Road)', '2024-09-29'),
+(36, 'circuito prueba', '2024-04-13');
 
 -- --------------------------------------------------------
 
@@ -187,7 +188,8 @@ INSERT INTO `pilotos` (`Piloto_id`, `Equipo_id`, `Nombre`, `Apellido`, `Estado`,
 (48, NULL, 'Richard', 'Petty', 'retirado', NULL),
 (49, NULL, 'Kasey', 'Kanhe', 'retirado', NULL),
 (50, NULL, 'Matt', 'Kenseth', 'retirado', NULL),
-(102, NULL, 'juan', 'juanez', 'compitiendo', 67);
+(102, NULL, 'juan', 'juanez', 'compitiendo', 67),
+(105, NULL, 'Piloto', 'Pruebaaa', 'retirado', 222);
 
 -- --------------------------------------------------------
 
@@ -199,9 +201,18 @@ CREATE TABLE `premios` (
   `Premio_id` int(11) NOT NULL,
   `Piloto_id` int(11) NOT NULL,
   `Equipo_id` int(11) NOT NULL,
-  `Nombre` varchar(40) NOT NULL,
-  `Temporada` varchar(40) NOT NULL
+  `Premio` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `premios`
+--
+
+INSERT INTO `premios` (`Premio_id`, `Piloto_id`, `Equipo_id`, `Premio`) VALUES
+(1, 29, 5, 'Novato del Año'),
+(2, 29, 5, 'Campeon Temporada'),
+(3, 29, 5, 'Piloto Favorito del Año'),
+(4, 35, 10, 'Piloto Favorito del Año');
 
 -- --------------------------------------------------------
 
@@ -1446,7 +1457,14 @@ INSERT INTO `resultados` (`Resultado_id`, `Piloto_id`, `Equipo_id`, `Carrera_id`
 (5294, 28, 14, 34, 33, 8),
 (5295, 23, 8, 34, 34, 7),
 (5296, 34, 10, 34, 35, 6),
-(5297, 12, 3, 34, 36, 5);
+(5297, 12, 3, 34, 36, 5),
+(5300, 36, 4, 36, 1, 40),
+(5301, 33, 2, 36, 2, 35),
+(5302, 5, 1, 36, 2, 35),
+(5303, 26, 9, 36, 4, 33),
+(5304, 31, 1, 36, 6, 31),
+(5305, 2, 3, 36, 2, 35),
+(5306, 3, 11, 36, 2, 35);
 
 -- --------------------------------------------------------
 
@@ -1524,7 +1542,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `carreras`
 --
 ALTER TABLE `carreras`
-  MODIFY `carrera_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `carrera_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de la tabla `equipos`
@@ -1536,19 +1554,19 @@ ALTER TABLE `equipos`
 -- AUTO_INCREMENT de la tabla `pilotos`
 --
 ALTER TABLE `pilotos`
-  MODIFY `Piloto_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `Piloto_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT de la tabla `premios`
 --
 ALTER TABLE `premios`
-  MODIFY `Premio_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Premio_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `resultados`
 --
 ALTER TABLE `resultados`
-  MODIFY `Resultado_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5298;
+  MODIFY `Resultado_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5307;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
