@@ -234,6 +234,7 @@ public class EditPilotoFragment extends Fragment {
         btn_edit_piloto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btn_edit_piloto.setEnabled(false);
                 if(!selectedPiloto.equals("Seleccione Piloto")) {
                     if (selectedEstado.equals("compitiendo") && selectedEquipo.equals("Sin Equipo")) {
                         pDao.editarPiloto(pilotos, p.getId(), -1, "compitiendo", p.getNumero());
@@ -253,6 +254,7 @@ public class EditPilotoFragment extends Fragment {
                 }else {
                     Toast.makeText(getActivity(), "Datos invalidos.", Toast.LENGTH_SHORT).show();
                 }
+                btn_edit_piloto.setEnabled(true);
             }
         });
 

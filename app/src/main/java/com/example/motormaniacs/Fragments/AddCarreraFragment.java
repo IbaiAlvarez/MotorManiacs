@@ -117,6 +117,7 @@ public class AddCarreraFragment extends Fragment {
         btn_guardar_carrera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btn_guardar_carrera.setEnabled(false);
                 if(!txt_circuito.getText().toString().equals("") && !txt_fecha.getText().toString().equals("")){
                     String circuito = txt_circuito.getText().toString();
                     String fecha = txt_fecha.getText().toString();
@@ -129,6 +130,7 @@ public class AddCarreraFragment extends Fragment {
                 }else{
                     Toast.makeText(getActivity(), "Datos invalidos.", Toast.LENGTH_SHORT).show();
                 }
+                btn_guardar_carrera.setEnabled(true);
             }
         });
 

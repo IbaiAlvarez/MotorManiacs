@@ -174,6 +174,7 @@ public class EditEquipoFragment extends Fragment {
         btn_guardar_equipo_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btn_guardar_equipo_edit.setEnabled(false);
                 if(!selectedEquipo.equals("Seleccione Piloto") && !txt_nombre_equipo_edit.getText().toString().equals("")) {
                     String nombre = txt_nombre_equipo_edit.getText().toString();
                     if(!eDao.comprobarEquipoExiste(nombre)) {
@@ -187,6 +188,7 @@ public class EditEquipoFragment extends Fragment {
                 }else{
                     Toast.makeText(getActivity(), "Datos invalidos.", Toast.LENGTH_SHORT).show();
                 }
+                btn_guardar_equipo_edit.setEnabled(true);
             }
         });
 

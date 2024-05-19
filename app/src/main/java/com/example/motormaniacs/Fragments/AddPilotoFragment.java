@@ -100,6 +100,7 @@ public class AddPilotoFragment extends Fragment {
         btn_guardar_piloto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btn_guardar_piloto.setEnabled(false);
                 if(!txt_nombre.getText().toString().equals("") && !txt_apellido.getText().toString().equals("") && !txt_numero.getText().toString().equals("")){
                     String nombre = txt_nombre.getText().toString();
                     String apellido = txt_apellido.getText().toString();
@@ -115,9 +116,10 @@ public class AddPilotoFragment extends Fragment {
                     }else if(validacion==2){
                         Toast.makeText(getActivity(), "El numero seleccionado lo está utilizando otro corredor.",Toast.LENGTH_SHORT).show();
                     }
-                                    }else{
+                }else{
                     Toast.makeText(getActivity(), "Datos invalidos.",Toast.LENGTH_SHORT).show();
                 }
+                btn_guardar_piloto.setEnabled(true);
             }
         });
 

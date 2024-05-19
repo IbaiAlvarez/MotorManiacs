@@ -151,6 +151,7 @@ public class AddEquipoFragment extends Fragment {
         btn_guardar_equipo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btn_guardar_equipo.setEnabled(false);
                 if(!txt_nombre_equipo.getText().toString().equals("")){
                     String nombre_equipo = txt_nombre_equipo.getText().toString();
                     if(!eDao.comprobarEquipoExiste(nombre_equipo)){
@@ -162,6 +163,7 @@ public class AddEquipoFragment extends Fragment {
                 }else{
                     Toast.makeText(getActivity(), "Datos invalidos.",Toast.LENGTH_SHORT).show();
                 }
+                btn_guardar_equipo.setEnabled(true);
             }
         });
 

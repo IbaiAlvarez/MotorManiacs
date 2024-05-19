@@ -24,6 +24,7 @@ public class ResultadoDao  extends Thread{
     private final String TABLA_EQUIPOS = ConexionDatos.getTABLA_EQUIPOS();
     private final String TABLA_RESULTADOS = ConexionDatos.getTABLA_RESULTADOS();
     private final String TABLA_CARRERAS = ConexionDatos.getTABLA_CARRERAS();
+    private final String TABLA_PILOTOS = ConexionDatos.getTABLA_PILOTOS();
     public String  nombre_equipo_param = "";
     public int  equipo_id_param = -1;
     public int  piloto_id_param = -1;
@@ -47,13 +48,6 @@ public class ResultadoDao  extends Thread{
         try {
             this.carrera_id_param = id_carrera;
             ArrayList<Resultado> resultados = new obtenerResultadosCarreraId().execute().get();
-
-            for(int i=0;i<resultados.size();i++){
-                PilotoDao pDao = new PilotoDao();
-                EquipoDao eDao = new EquipoDao();
-                resultados.get(i).setEquipo(eDao.cargarEquipoId(resultados.get(i).getEquipo().getId()));
-                resultados.get(i).setPiloto(pDao.cargarUnicoPilotoEquipo(resultados.get(i).getPiloto().getId(),resultados.get(i).getEquipo().getId()));
-            }
 
             return resultados;
         } catch (InterruptedException | ExecutionException e) {
@@ -147,23 +141,26 @@ public class ResultadoDao  extends Thread{
                 Connection conn = DriverManager.getConnection(url, user, password);
 
                 Statement stmt2 = conn.createStatement();
-                ResultSet rs2 = stmt2.executeQuery("SELECT * FROM "+TABLA_RESULTADOS+" where carrera_id="+carrera_id_param+";");
+                ResultSet rs2 = stmt2.executeQuery("select c.carrera_id C_ID, c.circuito C_CIRCUITO, c.fecha C_FECHA, r.Resultado_id R_ID, r.Posicion R_POSICION,r.Puntos R_PUNTOS,p.Piloto_id P_ID,p.Nombre P_NOMBRE, p.Apellido P_APELLIDO ,p.Numero P_NUMERO, e.Equipo_id E_ID, e.Nombre E_NOMBRE from "+TABLA_CARRERAS+" c join "+TABLA_RESULTADOS+" r on c.carrera_id=r.Carrera_id join "+TABLA_PILOTOS+" p on r.Piloto_id=p.Piloto_id join "+TABLA_EQUIPOS+" e on r.Equipo_id=e.Equipo_id where c.carrera_id = "+carrera_id_param+" ORDER BY `fecha` DESC; ");
 
                 while (rs2.next()){
                     Resultado res = new Resultado();
 
-                    res.setId_resultado(rs2.getInt(1));
+                    res.setId_resultado(rs2.getInt(4));
+                    res.setPosicion(rs2.getInt(5));
+                    res.setPuntos(rs2.getInt(6));
 
                     Piloto p = new Piloto();
-                    p.setId(rs2.getInt(2));
+                    p.setId(rs2.getInt(7));
+                    p.setNombre(rs2.getString(8));
+                    p.setApellido(rs2.getString(9));
+                    p.setNumero(rs2.getInt(10));
                     res.setPiloto(p);
 
                     Equipo e = new Equipo();
-                    e.setId(rs2.getInt(3));
+                    e.setId(rs2.getInt(11));
+                    e.setNombre(rs2.getString(12));
                     res.setEquipo(e);
-
-                    res.setPosicion(rs2.getInt(5));
-                    res.setPuntos(rs2.getInt(6));
 
                     resultados.add(res);
                 }

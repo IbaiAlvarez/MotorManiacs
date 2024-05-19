@@ -185,6 +185,7 @@ public class AddResultadoFragment extends Fragment {
         btn_guardar_resultado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btn_guardar_resultado.setEnabled(false);
                 if(!selectedFecha.equals("Selecciona Fecha") && !selectedPiloto.equals("Seleccione Piloto") && !txt_posicion.getText().toString().equals("")){
 
                     int posicion = Integer.parseInt(txt_posicion.getText().toString());
@@ -200,6 +201,7 @@ public class AddResultadoFragment extends Fragment {
                 }else{
                     Toast.makeText(getActivity(), "Datos incorrectos.", Toast.LENGTH_SHORT).show();
                 }
+                btn_guardar_resultado.setEnabled(true);
             }
         });
 

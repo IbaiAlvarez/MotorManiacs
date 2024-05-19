@@ -158,6 +158,7 @@ public class AddPremioFragment extends Fragment {
         btn_guardar_premio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btn_guardar_premio.setEnabled(false);
                 if(!selectedPremio.equals("Seleccione Premio") && !selectedPiloto.equals("Seleccione Piloto")){
 
                     if(pDao.insertarPremio(selectedPremio,p.getId(), p.getId_equipo())){
@@ -168,6 +169,7 @@ public class AddPremioFragment extends Fragment {
                 }else{
                     Toast.makeText(getActivity(), "Datos incorrectos.", Toast.LENGTH_SHORT).show();
                 }
+                btn_guardar_premio.setEnabled(true);
             }
         });
 
