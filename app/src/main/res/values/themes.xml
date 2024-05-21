@@ -6,4 +6,9 @@
     </style>
 
     <style name="Theme.MotorManiacs" parent="Base.Theme.MotorManiacs" />
+    <style name="BottomNavigation">
+        <item name="android:background">@color/green_Dark</item>
+        <item name="itemIconTint">@color/custom_blue</item>
+        <item name="itemTextColor">@color/custom_gray</item>
+    </style>
 </resources>

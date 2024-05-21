@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/custom_background"
+    tools:context=".Fragments.AddCarreraFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Activity.AdminActivity">
+
+        <EditText
+            android:id="@+id/txt_circuito"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="116dp"
+            android:ems="10"
+
+            android:hint="Circuito"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.621"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_addResultado" />
+
+        <TextView
+            android:id="@+id/lbl_addResultado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="68dp"
+            android:text="Añadir Carrera"
+            android:textColor="@color/white"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_atras_carrera"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_marginTop="89dp"
+            android:src="@drawable/flecha_izq_azul"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.191"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_guardar_premio" />
+
+        <ImageView
+            android:id="@+id/img_calendario"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="36dp"
+            android:src="@drawable/calendario"
+            app:layout_constraintStart_toEndOf="@+id/txt_fecha"
+            app:layout_constraintTop_toBottomOf="@+id/txt_circuito" />
+
+        <EditText
+            android:id="@+id/txt_fecha"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="48dp"
+            android:ems="10"
+            android:hint="Fecha"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_circuito" />
+
+        <Button
+            android:id="@+id/btn_guardar_premio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:backgroundTint="@color/custom_blue"
+            android:text="Guardar Carrera"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_fecha" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
